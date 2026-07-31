@@ -1,0 +1,19 @@
+.add-address {
+  width: 400px;
+  margin: auto;
+}
+
+.add-address input {
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px;
+}
+
+.add-address button {
+  background: #4d9eff;
+  color: white;
+  padding: 10px;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+}

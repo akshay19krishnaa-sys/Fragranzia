@@ -1,0 +1,238 @@
+body{
+    display: flex;
+    background-color: white;
+    display: flex;
+    /* justify-content: center; */
+    /* align-items: center; */
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    width: 100%;
+  
+
+
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.main-login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+      padding: 50px;
+    gap: 150px;
+    height: 100vh;
+    width: 100%;
+    
+    
+}
+.text-login{
+    background: url(menperfume.jpg);
+    height: 100%;
+    width: 50%;
+    
+    background-size: cover;       
+    background-position: center;
+     width: 100%;
+     position: relative;
+     border-bottom-left-radius: 200px;
+     border-top-right-radius: 200px;
+  box-shadow: 2px 4px 10px 0px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+
+     
+}
+.text-login:hover{
+   transform: scale(1.01) translatey(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+
+}
+.text-login::before{
+    content: "";
+    inset: 0;
+    position: absolute;
+    background-color: rgb(0, 0, 0, 0.7);
+      border-bottom-left-radius: 200px;
+     border-top-right-radius: 200px;
+
+    z-index:1
+  
+}
+.text1-login{
+     padding: 80px;
+    position: relative;
+    margin-top: 60px;
+    color: #FFFFFF;
+    z-index:2 
+}
+h4{
+    margin-top: 20px;
+}
+.logo-text-login{
+    display: flex;
+    gap: 15px;
+}
+.google-btn-login{
+     display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    width: 200px;
+    height: 45px;
+     font-size: 16px;
+    font-weight: 500;
+    border: 2px solid #00354B;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+}
+.google-btn-login img{
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+}
+.google-btn-login:hover {
+    background-color: var(--color-primary);
+    color: #FFFFFF;
+    transform: translateY(-3px);
+    box-shadow: 0px 8px 20px rgba(0, 53, 75, 0.3);
+}
+
+
+.google-btn-login:hover img {
+    filter: brightness(0) invert(1);
+}
+
+.hr-line-login{
+   
+    width: 113px;
+    height: 0px;
+    margin-top: 30px;
+    border: 1px solid #000000;
+}
+.line-login{
+    display: flex;
+    gap: 20px;
+}
+.line-text-login{
+    margin-top: 17px;
+    font-size: 12px;
+}
+.form-group-login {
+      position: relative;
+      margin-bottom: 14px;
+      margin-top: 20px;
+    }
+
+   
+    .form-group-login input {
+      width: 100%;
+      height: 40px;
+      padding: 0 42px;
+      border: none;
+      border-radius: 6px;
+      background: #D9D9D9;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+.form-group-login input:hover {
+  background: #e6e6e6;
+}
+
+
+.form-group-login input:focus {
+  outline: none;
+  background: #ffffff;
+  border: 2px solid #00354B;
+  box-shadow: 0 0 0 4px rgba(0, 53, 75, 0.1);
+}
+
+    .form-group-login i {
+      position: absolute;
+      top: 50%;
+      left: 14px;
+      transform: translateY(-50%);
+      font-size: 18px;
+      color: #000000;
+    }
+
+    .term-login {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      margin: 10px 0 20px;
+    }
+
+    .signup-btn-login {
+      width: 100%;
+      height: 50px;
+      background: #053f4f;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .signup-btn-login:hover {
+  background: #075c70;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 10px rgba(5, 63, 79, 0.3);
+}
+.signup-btn-login:active {
+  transform: scale(0.96);
+  box-shadow: 0 5px 10px rgba(5, 63, 79, 0.2);
+}
+
+    .signin-login {
+      text-align: center;
+      margin-top: 14px;
+      font-size: 13px;
+    }
+
+    .signin-login a {
+      color: #053f4f;
+      text-decoration: none;
+      font-weight: bold;
+    }
+.error-login{
+  text-align: center;
+  color: red;
+}
+.signup-login-link {
+  text-decoration: none;
+  color: #555;
+  font-size: 14px;
+}
+
+.signup-login-link:hover {
+  color: #000;
+  text-decoration: underline;
+}
+.login{
+ margin-top: 80px;
+}
+.forget-login{
+    padding: 5px;    
+}
+.forget-login a {
+    text-decoration: none;
+    color: #00354B;
+    position: relative;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    font-size: 10px;
+}
+
+
+.forget-login a:hover {
+  color: #076a80;
+}
+
+

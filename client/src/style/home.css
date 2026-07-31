@@ -1,0 +1,565 @@
+body{
+    margin: 0;
+    padding: 0%;
+    width: 100%;
+}
+.offer-bar{
+    background-color: var(--color-primary);
+    color: white;
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+}
+.content-home{
+    padding: 50px;
+}
+
+.blueper-box {
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 40px 60px;
+  gap: 80px;
+
+  background-image:
+    linear-gradient(
+      to right,
+      rgba(0, 53, 75, 0.95),
+      rgba(41, 81, 98, 0.85),
+      rgba(44, 83, 99, 0.75)
+    ),
+    url("picture-bg.png");
+
+  background-size: cover;
+  background-position: center right;
+  background-repeat: no-repeat;
+
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.blueper-boxtext{
+    margin-left: 80px;
+    padding: 20px;
+}
+.blueper-boxtext button{
+    padding: 10px  30px;
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+.blueper-boxtext button:hover {
+  background-color:var(--color-primary);
+  color: white;
+}
+.blueper-img{
+    width: 300px;
+    height: 300px;
+    rotate: -16deg;
+    position: absolute;
+    left: 700px;
+    top: 30px;
+    
+}
+.blueper-imgg{
+    width: 250px;
+    height: 250px;
+    rotate: 20deg;
+    position: absolute;
+    left: 850px;
+    top: 80px;
+}
+
+.orange-box {
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 40px 60px ;
+  gap: 80px;
+ 
+
+  background-image:
+    linear-gradient(
+      to right,
+      rgba(193, 115, 18, 0.95),
+      rgba(214, 137, 37, 0.9),
+      rgba(235, 162, 66, 0.85)
+    ),
+    url("picture-bg.png");
+
+  background-size: cover;
+  background-position: top right;
+  background-repeat: no-repeat;
+
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+
+.orange-boxtext{
+    margin-left: 80px;
+    padding: 20px;
+}
+.orange-boxtext button{
+    padding: 10px  30px;
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+.orange-boxtext button:hover {
+  background-color:var(--color-primary);
+  color: white;
+}
+.orange-img{
+    width: 300px;
+    height: 300px;
+    rotate: -16deg;
+    position: absolute;
+    left: 700px;
+    top: 30px;
+    
+}
+.orange-imgg{
+    width: 250px;
+    height: 250px;
+    rotate: 20deg;
+    position: absolute;
+    left: 850px;
+    top: 80px;
+}
+.offers{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  
+  gap: 30px;
+  padding: 30px 0px;
+ 
+}
+.offers img{
+  width: 150px;
+  height: 150px;
+
+}
+.offer1{
+  display: flex;
+  background-color: #E7E7E7;
+  padding: 30px;
+  border-radius: 10px;
+  width: 370px;
+  height: 180px;
+  box-shadow: 0 5px 10px rgba(5, 63, 79, 0.2);
+}
+.offer2{
+    background-color: #ECECEC;
+  padding: 30px;
+  border-radius: 10px;
+    width: 370px;
+  height: 180px;
+  text-align: center;
+   position: relative;
+   overflow: hidden;
+   box-shadow: 0 5px 10px rgba(5, 63, 79, 0.2);
+}
+.offer2 img{
+  position: absolute;
+  top: 80px;
+  left: 100px;
+
+}
+.offer3{
+      background-color: #EAE5E8;
+  padding: 20px;
+  border-radius: 10px;
+    width: 370px;
+  height: 180px;
+   position: relative;
+   overflow: hidden;
+   box-shadow: 0 5px 10px rgba(5, 63, 79, 0.2);
+
+}
+.offer3 img{
+  position: absolute;
+  top: 70px;
+  left: 200px;
+  transform: rotate(20deg);
+}
+.offer3 p{
+  background-color: var(--color-primary);
+  padding: 30px;
+  width: 100px;
+  margin-top: 10px;
+  margin-left: 20px;
+  color: #EAE5E8;
+  border-radius: 50px;
+
+}
+.features{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+   box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+   padding: 20px 20px;
+   border-radius: 10px;
+
+}
+.feature1{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 550px;
+  background: #e60023;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.productrow-home{
+  padding: 40px 0px;
+}
+.product-heading h2{
+  padding: 0px 0px;
+}
+.prdoducts-home{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 30px;
+  padding: 30px;
+  color: var(--color-primary);
+  overflow: scroll;
+  scrollbar-width: none;
+ 
+}
+.product-item-home{
+  width: 220px;
+  height: 320px; 
+  background: #fff;
+  border-radius: 15px;
+  padding: 15px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+   transition: all 0.3s ease;
+}
+.product-item-home:hover{
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+
+
+}
+.product-item-home img{
+   box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+   border-radius: 0px 40px 0px 40px;
+    transition: all 0.3s ease;
+
+}
+.product-item-home img:hover{
+   transform: scale(1.03);
+
+}
+.product-item-home button {
+  border: none;
+  background-color: var(--color-primary);
+  color: var( --color-font);
+  padding: 10px;
+  border-radius: 20px;
+  transition: 0.3s;
+}
+
+.product-item-home button:hover {
+  background: var(  --color-buttonhover);
+   color: #000;
+  transform: scale(1.05);
+}
+.product-item-home{
+  position: relative;
+}
+
+.wishlist-icon{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: white;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+.empty-heart{
+  color: rgb(175, 175, 38);
+}
+ .filled-heart{
+  color: red;
+}
+
+
+.wishlist-icon svg{
+  color: rgb(152, 143, 143);
+  font-size: 18px;
+  transition: 0.3s;
+}
+
+.wishlist-icon svg:hover{
+  transform: scale(1.2);
+}
+.quote{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.explore-home{
+  
+}
+.exploreitem-home{
+  display: flex;
+  justify-content: flex-start;
+  /* align-items: center; */
+  gap: 30px;
+   overflow: scroll;
+  scrollbar-width: none;
+  text-align: center;
+  font-size: smaller;
+  padding: 20px 20px;
+  
+
+}
+.explore-item-home{
+  
+}
+.explore-item-home img{
+  height: 100px;
+  width: 100px;
+  padding: 20px;
+  border-radius: 50%;
+     box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+ 
+}
+.addbox-home{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  color: #E7E7E7;
+  font-weight: bold;
+  padding-bottom: 50px;
+  padding-top: 30px;
+
+}
+
+ .addbox1-home {
+  height: 300px;
+  width: 200px;
+  border-radius: 10px;
+  background: url(addper.jpg);
+    
+    background-size: cover;       
+    background-position: center;
+    position: relative;
+    transition: 0.3s;
+    
+}
+.addbox1-home::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+   border-radius: 10px;
+  background: rgba(0, 0, 0, 0.5);
+}
+.addbox1-home p{
+   position: absolute;
+  bottom: 10px;  
+  left: 30px; 
+   transform: rotate(-90deg);
+   transform-origin: left bottom;    
+
+}
+.addbox1-home:hover{
+  height: 300px;
+  width:250px;
+}
+.addbox2-home {
+  height: 300px;
+  width:200px;
+   border-radius: 10px;
+  background: url(girlperfume.jpg);
+    
+    background-size: cover;       
+    background-position: center;
+    position: relative;
+    transition: 0.3s;
+}
+
+.addbox2-home::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+   border-radius: 10px;
+  background: rgba(0, 0, 0, 0.5);
+}
+.addbox2-home p{
+   position: absolute;
+  bottom: 10px;  
+  left: 30px; 
+   transform: rotate(-90deg);
+   transform-origin: left bottom;    
+
+}
+.addbox2-home:hover{
+  height: 300px;
+  width:250px;
+}
+.addbox3-home {
+  height: 300px;
+  width: 200px;
+   border-radius: 10px;
+  background: url(addper2.jpg);
+    
+    background-size: cover;       
+    background-position: center;
+    position: relative;
+    transition: 0.3s;
+}
+.addbox3-home::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+   border-radius: 10px;
+  background: rgba(0, 0, 0, 0.5);
+}
+.addbox3-home p{
+   position: absolute;
+  bottom: 10px;  
+  left: 30px; 
+   transform: rotate(-90deg);
+   transform-origin: left bottom;    
+
+}
+.addbox3-home:hover{
+  height: 300px;
+  width:250px;
+}
+.describe-home{
+  display: flex;
+  height: 250px;
+  padding: 30px;
+  border-radius: 20px;
+  overflow: hidden;
+ background: linear-gradient(90deg, #4ec2d9, #D0F7FB,  #B3EDF8);
+ position: relative;
+}
+.describe-home img {
+  width: 300px;
+  rotate: 20deg;
+  position: absolute;
+  right: -20px;   /* better than left: 800px */
+  top: -100px;
+  border:1px solid whitesmoke;
+
+  /* opacity: 0.85; */
+  filter: brightness(1.1) contrast(0.9);
+}
+.describetext-home button {
+  padding: 10px 25px;
+  margin-top: 50px;
+  background: white;
+  color: #333;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.describetext-home button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+.auth-buttons-home {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 50px 0px 50px;
+}
+
+.login-btn-home,
+.signup-btn-home {
+  padding: 10px 22px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+/* Login Button */
+.login-btn-home {
+  background: transparent;
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+}
+
+.login-btn-home:hover {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+/* Signup Button */
+.signup-btn-home {
+  background: var(--color-primary);
+  border: 2px solid var(--color-primary);
+  color: #fff;
+}
+
+.signup-btn-home:hover {
+  background: var(--color-buttonhover);
+  border-color: var(--color-buttonhover);
+  color: #000;
+}

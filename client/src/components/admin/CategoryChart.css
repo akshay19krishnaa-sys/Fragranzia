@@ -1,0 +1,10 @@
+.category-chart{
+    background:#fff;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+.category-chart h2{
+    margin-bottom:20px;
+}

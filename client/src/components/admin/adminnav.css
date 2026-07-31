@@ -1,0 +1,65 @@
+.main-admin{
+    position: fixed;
+    top: 0;
+    left: 250px;
+    width: calc(100% - 250px);
+    z-index: 1000;
+}
+
+.control-panel{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    height: 80px;
+    width: 100%;
+    padding: 20px;
+    border-bottom: 1px solid whitesmoke;
+}
+
+.main-page{
+    background-color: rgb(205, 205, 207);
+    height: 1000px;
+    width: 100%;
+}
+
+.panel-icons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.panel-icons button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    padding: 10px;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.panel-icons button:hover{
+    background-color: rgba(0,0,0,0.05);
+    transform: translateY(-1px) scale(1.05);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.22);
+}
+
+.panel-icons button:active{
+    transform: scale(0.95);
+}
+
+.profile-icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-icon h5{
+    margin: 0;
+}

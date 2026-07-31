@@ -1,0 +1,34 @@
+footer{
+    background-color: #8BB8BE;
+    color: var(--color-primary);
+}
+
+
+.main-footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px;
+    
+}
+.main1-footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 80px;
+}
+.social-media{
+    display: flex;
+    gap: 10px;
+
+}
+.details{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    border-top: 2px solid var(--color-primary);
+}
+.details1{
+    display: flex;
+    gap: 10px;
+}
