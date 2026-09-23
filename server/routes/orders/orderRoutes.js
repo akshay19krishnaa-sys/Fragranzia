@@ -7,9 +7,11 @@ const {
   updateOrderStatus,
   getOrderById,
   cancelOrder,
-   approveReturn,
+  approveReturn,
   rejectReturn,
-  requestReturn
+  requestReturn,
+  createRazorpayOrder,
+  verifyRazorpayPayment
 } = require("../../controllers/orders/orderController");
 
 const checkAuth = require("../../middlewares/checkAuth");
@@ -91,6 +93,15 @@ router.get(
   checkAuth,
   getOrderById
 );
+
+router.post("/razorpay/create-order", createRazorpayOrder);
+
+router.post(
+  "/razorpay/verify-payment",
+  checkAuth,
+  verifyRazorpayPayment
+);
+
 
 
 module.exports = router;

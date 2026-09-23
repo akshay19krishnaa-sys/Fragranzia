@@ -1,20 +1,25 @@
+const crypto = require("crypto");
 const Order = require("../../models/orders/order");
 const Address = require("../../models/address/addressModel");
 const { Product } = require("../../models/products/product");
-
+const razorpay = require("../../config/razorpay");
 // Create order
 const createOrder = async (req, res) => {
   try {
 
     const {
-      items,
-      totalAmount,
-      addressId,
-      paymentMethod,
-      subtotal,
-      discount,
-      deliveryCharge
-    } = req.body;
+  items,
+  totalAmount,
+  addressId,
+  paymentMethod,
+  subtotal,
+  discount,
+  deliveryCharge,
+  paymentStatus,
+  razorpayOrderId,
+  razorpayPaymentId,
+  razorpaySignature
+} = req.body;
 
 
     const address = await Address.findById(addressId);
@@ -62,30 +67,40 @@ const formattedItems = items.map((item) => ({
 
 
 
+const order = await Order.create({
 
-    const order = await Order.create({
+  userId: req.userId,
 
-      userId:req.userId,
+  items: formattedItems,
 
-      items:formattedItems,
+  totalAmount,
 
-      totalAmount,
+  shippingAddress: {
+    fullName: address.fullName,
+    phone: address.phone,
+    house: address.house,
+    city: address.city,
+    state: address.state,
+    pincode: address.pincode
+  },
 
-      shippingAddress:{
-        fullName:address.fullName,
-        phone:address.phone,
-        house:address.house,
-        city:address.city,
-        state:address.state,
-        pincode:address.pincode
-      },
+  paymentMethod,
 
-      paymentMethod,
-      subtotal,
-      discount,
-      deliveryCharge
+  paymentStatus: paymentStatus || "pending",
 
-    });
+  razorpayOrderId: razorpayOrderId || "",
+
+  razorpayPaymentId: razorpayPaymentId || "",
+
+  razorpaySignature: razorpaySignature || "",
+
+  subtotal,
+
+  discount,
+
+  deliveryCharge
+
+});
 
 
     res.status(201).json(order);
@@ -360,6 +375,93 @@ const rejectReturn = async (req, res) => {
 };
 
 
+
+const createRazorpayOrder = async (req, res) => {
+    try {
+        const { amount } = req.body;
+
+        if (!amount) {
+            return res.status(400).json({
+                success: false,
+                message: "Amount is required",
+            });
+        }
+
+        const options = {
+            amount: Math.round(amount * 100), // ₹ → paise
+            currency: "INR",
+            receipt: `receipt_${Date.now()}`,
+        };
+
+        const order = await razorpay.orders.create(options);
+
+        res.status(200).json({
+            success: true,
+            order,
+        });
+
+    } catch (error) {
+    console.error("Razorpay Order Error:", error);
+
+    res.status(500).json({
+        success: false,
+        message: "Failed to create Razorpay order",
+        error: error.message,
+    });
+}
+};
+
+const verifyRazorpayPayment = async (req, res) => {
+  try {
+    const {
+      razorpay_order_id,
+      razorpay_payment_id,
+      razorpay_signature,
+    } = req.body;
+
+    if (
+      !razorpay_order_id ||
+      !razorpay_payment_id ||
+      !razorpay_signature
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "Payment details are missing",
+      });
+    }
+
+    const generatedSignature = crypto
+      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+      .update(
+        `${razorpay_order_id}|${razorpay_payment_id}`
+      )
+      .digest("hex");
+
+    if (generatedSignature !== razorpay_signature) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid payment signature",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Payment verified successfully",
+    });
+
+  } catch (error) {
+    console.error("Payment Verification Error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Payment verification failed",
+    });
+  }
+};
+
+
+
+
 module.exports = {
   createOrder,
   getUserOrders,
@@ -369,5 +471,7 @@ module.exports = {
   cancelOrder,
   requestReturn,
   approveReturn,
-  rejectReturn
+  rejectReturn,
+  createRazorpayOrder,
+  verifyRazorpayPayment
 };

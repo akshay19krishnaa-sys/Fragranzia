@@ -62,13 +62,34 @@ const orderSchema = new mongoose.Schema(
       pincode: String,
     },
 
-    paymentMethod: {
-      type: String,
-    },
+   paymentMethod: {
+  type: String,
+},
 
-    subtotal: {
-      type: Number,
-    },
+paymentStatus: {
+  type: String,
+  enum: ["pending", "paid", "failed"],
+  default: "pending",
+},
+
+razorpayOrderId: {
+  type: String,
+  default: "",
+},
+
+razorpayPaymentId: {
+  type: String,
+  default: "",
+},
+
+razorpaySignature: {
+  type: String,
+  default: "",
+},
+
+subtotal: {
+  type: Number,
+},
 
     discount: {
       type: Number,
@@ -77,8 +98,13 @@ const orderSchema = new mongoose.Schema(
     deliveryCharge: {
       type: Number,
     },
+
+    
   },
   { timestamps: true }
+
+
+  
 );
 
 module.exports = mongoose.model("Order", orderSchema);

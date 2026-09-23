@@ -11,9 +11,15 @@ function Order() {
 
     const navigate = useNavigate();
 
+    console.log(
+    "Razorpay Key:",
+    import.meta.env.VITE_RAZORPAY_KEY_ID
+);
+
 
   const {
-    createOrder,
+    createOrder, createRazorpayOrder,
+  verifyRazorpayPayment,
   } = OrderService();
 
   const {
@@ -33,6 +39,20 @@ function Order() {
   useEffect(() => {
     loadOrderData();
   }, []);
+
+
+useEffect(() => {
+    const script = document.createElement("script");
+
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+
+    document.body.appendChild(script);
+
+    return () => {
+        document.body.removeChild(script);
+    };
+}, []);
 
   const loadOrderData = async () => {
     try {
@@ -101,36 +121,164 @@ const deliveryCharge = subtotal > 500 ? 0 : 40;
 
 const totalAmount = originalTotal + deliveryCharge;
 
-  const handlePlaceOrder = async () => {
+const handlePlaceOrder = async () => {
     if (!selectedAddress) {
-      toast.warning("Select Address");
-      return;
+        toast.warning("Select Address");
+        return;
     }
-
-    
 
     try {
-      const orderData = {
-        addressId: selectedAddress._id,
-        paymentMethod,
-        items: cartItems,
-        subtotal,
-        deliveryCharge,
-        totalAmount,
-      };
+        const orderData = {
+            addressId: selectedAddress._id,
+            paymentMethod,
+            items: cartItems,
+            subtotal,
+            deliveryCharge,
+            totalAmount,
+        };
 
-    const order = await createOrder(orderData);
+        // ================= COD =================
+        if (paymentMethod === "cod") {
+            const order = await createOrder(orderData);
 
-console.log(order);
+            console.log("COD Order:", order);
 
-await clearCart();
+            await clearCart();
 
-navigate(`/ordersuccess/${order._id}`);
-    } catch (err) {
-      console.log(err);
-      toast.error("error");
+            navigate(`/ordersuccess/${order._id}`);
+
+            return;
+        }
+
+        // ================= RAZORPAY =================
+
+        // 1. Create Razorpay order from backend
+        const razorpayData = await createRazorpayOrder(totalAmount);
+
+        console.log("Razorpay Order:", razorpayData);
+
+        if (!razorpayData.success) {
+            toast.error("Unable to create payment order");
+            return;
+        }
+
+        // 2. Razorpay Checkout options
+        const options = {
+            key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+
+            amount: razorpayData.order.amount,
+
+            currency: razorpayData.order.currency,
+
+            name: "Fragranzia",
+
+            description: "Fragranzia Order Payment",
+
+            order_id: razorpayData.order.id,
+
+handler: async function (response) {
+    console.log("Payment Success:", response);
+
+    try {
+
+        // 1. Verify payment with backend
+        const verification = await verifyRazorpayPayment({
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature,
+        });
+
+        console.log("Payment Verification:", verification);
+
+        if (!verification.success) {
+            toast.error("Payment verification failed");
+            return;
+        }
+
+        // 2. Create final order
+        const finalOrderData = {
+            ...orderData,
+
+            paymentStatus: "paid",
+
+            razorpayOrderId: response.razorpay_order_id,
+
+            razorpayPaymentId: response.razorpay_payment_id,
+
+            razorpaySignature: response.razorpay_signature,
+        };
+
+        const order = await createOrder(finalOrderData);
+
+        // 3. Clear cart
+        await clearCart();
+
+        // 4. Success message
+        toast.success("Payment Successful!");
+
+        // 5. Navigate
+        navigate(`/ordersuccess/${order._id}`);
+
+    } catch (error) {
+
+        console.error(
+            "Payment Verification Error:",
+            error.response?.data || error.message
+        );
+
+        toast.error("Payment verification failed");
     }
-  };
+},
+
+            prefill: {
+                name: selectedAddress.fullName,
+                contact: selectedAddress.phone,
+            },
+
+            theme: {
+                color: "#00354B",
+            },
+
+            modal: {
+                ondismiss: function () {
+                    toast.info("Payment cancelled");
+                },
+            },
+        };
+
+        // 3. Open Razorpay Checkout
+        // 3. Open Razorpay Checkout
+if (!window.Razorpay) {
+    toast.error("Razorpay is still loading. Please try again.");
+    return;
+}
+
+// 3. Open Razorpay Checkout
+console.log("Razorpay object:", window.Razorpay);
+
+if (!window.Razorpay) {
+    console.error("Razorpay SDK not loaded");
+    toast.error("Razorpay is still loading. Please try again.");
+    return;
+}
+
+const razorpay = new window.Razorpay(options);
+
+console.log("Opening Razorpay Checkout...");
+
+razorpay.open();
+
+console.log("Razorpay open called");
+
+    } catch (err) {
+        console.error(
+            "Payment Error:",
+            err.response?.data || err.message
+        );
+
+        toast.error("Payment failed");
+    }
+};
 
   if (loading) return <div className="order-loading">Loading...</div>;
 
@@ -237,8 +385,8 @@ navigate(`/ordersuccess/${order._id}`);
             ))}
 
             <button className="pay-btn" onClick={handlePlaceOrder}>
-              Pay Now
-            </button>
+  {paymentMethod === "cod" ? "Order Now" : "Pay Now"}
+</button>
           </div>
 
         </div>
