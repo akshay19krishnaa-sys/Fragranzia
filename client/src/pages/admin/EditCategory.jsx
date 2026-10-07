@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./editCategory.css";
+import "./editcategory.css";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import UserService from "../../services/user-api-service/CategoryService";

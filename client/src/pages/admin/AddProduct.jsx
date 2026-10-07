@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./AddProduct.css";
+import "./addproduct.css";
 import axios from "axios";
 import { toast } from "react-toastify";
 import UserService from "../../services/user-api-service/UserService";

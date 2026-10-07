@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Customers.css";
+import "./customers.css";
 import AdminUserService from "../../services/admin-api-service/AdminService";
 
 function Customers() {
