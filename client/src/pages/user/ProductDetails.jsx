@@ -31,7 +31,7 @@ function ProductDetails() {
 
   const fetchProducts = async () => {
     try {
-      // const res = await fetch("http://localhost:5000/api/products");
+      // const res = await fetch("https://fragranzia-rf6r.onrender.com/api/products");
       // const data = await res.json();
 
        const res = await getProductById(id); 
@@ -103,7 +103,7 @@ const handleAddCart = async () => {
 
       <div className="product-main">
                              <img
-  src={`http://localhost:5000/uploads/${product.images[0]}`}
+  src={`https://fragranzia-rf6r.onrender.com/uploads/${product.images[0]}`}
   alt="" width="200"
 />
 

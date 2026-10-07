@@ -9,7 +9,7 @@ const AdminService = () => {
   const registerAdmin = async (data) => {
 
     const response = await axios.post(
-      "http://localhost:5000/api/admin/register",
+      "https://fragranzia-rf6r.onrender.com/api/admin/register",
       data
     );
 
@@ -22,7 +22,7 @@ const AdminService = () => {
   const loginAdmin = async (data) => {
 
     const response = await axios.post(
-      "http://localhost:5000/api/admin/login",
+      "https://fragranzia-rf6r.onrender.com/api/admin/login",
       data
     );
 

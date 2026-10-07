@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import UserService from "../../services/user-api-service/UserService";
 import CategoryService from "../../services/user-api-service/CategoryService";
 
-// const API_URL = "http://localhost:5000/api/products";
+// const API_URL = "https://fragranzia-rf6r.onrender.com/api/products";
 
 function AddProduct() {
 

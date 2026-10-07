@@ -281,7 +281,7 @@ function OrdersTab() {
                         <div className="product-cell">
 
                           <img
-                            src={`http://localhost:5000/uploads/${item.productImage}`}
+                            src={`https://fragranzia-rf6r.onrender.com/uploads/${item.productImage}`}
                             alt={item.productName}
                           />
 

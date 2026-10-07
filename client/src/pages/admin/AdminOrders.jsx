@@ -227,7 +227,7 @@ const handleRejectReturn = async (id) => {
                     >
 
                       <img
-                        src={`http://localhost:5000/uploads/${item.productImage}`}
+                        src={`https://fragranzia-rf6r.onrender.com/uploads/${item.productImage}`}
                         alt={item.productName}
                       />
 
@@ -412,7 +412,7 @@ const handleRejectReturn = async (id) => {
                   >
 
                     <img
-                      src={`http://localhost:5000/uploads/${item.productImage}`}
+                      src={`https://fragranzia-rf6r.onrender.com/uploads/${item.productImage}`}
                       alt={item.productName}
                     />
 

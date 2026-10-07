@@ -269,7 +269,7 @@ const isLoggedIn = !!token;
 </div>
 
   <img
-    src={`http://localhost:5000/uploads/${item.images[0]}`}
+    src={`https://fragranzia-rf6r.onrender.com/uploads/${item.images[0]}`}
     alt=""
   />
 
@@ -306,7 +306,7 @@ const isLoggedIn = !!token;
       {Products.map((item) => (
         <div key={item._id} className='explore-item-home'>
             <img
-  src={`http://localhost:5000/uploads/${item.images[0]}`}
+  src={`https://fragranzia-rf6r.onrender.com/uploads/${item.images[0]}`}
   alt=""
 />
           <h5>{item.title}</h5>
@@ -326,7 +326,7 @@ const isLoggedIn = !!token;
   onClick={() => navigate(`/product/${item._id}`)}
 >
            <img
-  src={`http://localhost:5000/uploads/${item.images[0]}`}
+  src={`https://fragranzia-rf6r.onrender.com/uploads/${item.images[0]}`}
   alt=""
 />
           <h5>{item.title}</h5>

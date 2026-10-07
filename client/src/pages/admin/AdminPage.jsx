@@ -25,7 +25,7 @@ function AdminPage() {
   const fetchProducts = async() =>{
     
     try {
-      // const res = await axios.get( "http://localhost:5000/api/fragranzia");
+      // const res = await axios.get( "https://fragranzia-rf6r.onrender.com/api/fragranzia");
      const res = await getProducts(); 
 
 
@@ -240,7 +240,7 @@ const handleToggleBlock = async (productId) => {
 
           <img
             key={index}
-            src={`http://localhost:5000/uploads/${img}`}
+            src={`https://fragranzia-rf6r.onrender.com/uploads/${img}`}
            alt={showProduct.title}
           />
 

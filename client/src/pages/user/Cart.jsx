@@ -83,7 +83,7 @@ const totalAmount = Products.reduce((total, item) => {
               >
                 <div className="cart-image">
                   <img
-                    src={`http://localhost:5000/uploads/${item.product.images[0]}`}
+                    src={`https://fragranzia-rf6r.onrender.com/uploads/${item.product.images[0]}`}
                     alt={item.product.title}
                   />
                 </div>

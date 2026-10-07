@@ -58,7 +58,7 @@ function EditProduct() {
 
       // const res = await axios.get(
 
-      //   // `http://localhost:5000/api/products/${id}`
+      //   // `https://fragranzia-rf6r.onrender.com/api/products/${id}`
 
       // );
 

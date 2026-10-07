@@ -4,7 +4,7 @@ const PaymentService = () => {
 
   const createRazorpayOrder = async (amount) => {
     const res = await axios.post(
-      "http://localhost:5000/api/payment/create-order",
+      "https://fragranzia-rf6r.onrender.com/api/payment/create-order",
       { amount }
     );
 

@@ -6,7 +6,7 @@ const AuthService = () => {
   const login = async (data) => {
 
     const res = await axios.post(
-      "http://localhost:5000/api/users/login",
+      "https://fragranzia-rf6r.onrender.com/api/users/login",
       data
     );
 
@@ -17,7 +17,7 @@ const AuthService = () => {
   const register = async (data) => {
 
     const res = await axios.post(
-      "http://localhost:5000/api/users/register",
+      "https://fragranzia-rf6r.onrender.com/api/users/register",
       data
     );
 

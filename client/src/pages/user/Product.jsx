@@ -187,7 +187,7 @@ const handleWishlist = async (productId) => {
               </div>
 
               <img
-                src={`http://localhost:5000/uploads/${item.images[0]}`}
+                src={`https://fragranzia-rf6r.onrender.com/uploads/${item.images[0]}`}
                 alt=""
               />
 

@@ -293,7 +293,7 @@ console.log("Razorpay open called");
   <div className="order-product-card" key={item._id}>
     <div className="order-image">
       <img
-        src={`http://localhost:5000/uploads/${item.product?.images?.[0]}`}
+        src={`https://fragranzia-rf6r.onrender.com/uploads/${item.product?.images?.[0]}`}
         alt={item.product?.title}
       />
     </div>
