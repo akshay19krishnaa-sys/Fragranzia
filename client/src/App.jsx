@@ -24,7 +24,7 @@ import About from "./pages/user/About";
 import AdminPage from "./pages/admin/AdminPage";
 import AddProduct from "./pages/admin/AddProduct";
 import EditProduct from "./pages/admin/EditProduct";
-import Categories from "./pages/admin/categories";
+import Categories from "./pages/admin/Categories";
 import AddCategory from "./pages/admin/AddCategory"
 import EditCategory from "./pages/admin/EditCategory"
 import Adminorders from "./pages/admin/AdminOrders"
