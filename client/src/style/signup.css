@@ -27,7 +27,7 @@ body{
     
 }
 .text{
-    background: url(girlperfume.jpg);
+   background: url("/girlperfume.jpg");;
     height: 100%;
     width: 50%;
     

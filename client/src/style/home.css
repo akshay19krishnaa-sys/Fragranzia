@@ -30,7 +30,7 @@ body{
       rgba(41, 81, 98, 0.85),
       rgba(44, 83, 99, 0.75)
     ),
-    url("picture-bg.png");
+    url("/picture-bg.png");
 
   background-size: cover;
   background-position: center right;
@@ -387,7 +387,7 @@ body{
   height: 300px;
   width: 200px;
   border-radius: 10px;
-  background: url(addper.jpg);
+ background: url("/addper.jpg");;
     
     background-size: cover;       
     background-position: center;
@@ -421,7 +421,7 @@ body{
   height: 300px;
   width:200px;
    border-radius: 10px;
-  background: url(girlperfume.jpg);
+ background: url("/girlperfume.jpg");;
     
     background-size: cover;       
     background-position: center;
@@ -455,7 +455,7 @@ body{
   height: 300px;
   width: 200px;
    border-radius: 10px;
-  background: url(addper2.jpg);
+  background: url("/addper2.jpg");;
     
     background-size: cover;       
     background-position: center;
