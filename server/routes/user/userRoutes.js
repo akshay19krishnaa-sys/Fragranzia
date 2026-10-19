@@ -9,6 +9,7 @@ const {
 } = require("../../controllers/user/userController");
 
 const checkAuth = require("../../middlewares/checkAuth");
+const upload = require("../../middlewares/upload");
 
 const { addToWishlist } = require("../../controllers/user/wishlistController");
 const { addToCart, getCart } = require("../../controllers/user/cartController");
@@ -20,7 +21,7 @@ router.post("/login", loginUser);
 
 // PROFILE 
 router.get("/", checkAuth, getProfile);
-router.put("/profile", checkAuth, updateProfile);
+router.put("/profile", checkAuth, upload.single("image"), updateProfile);
 
 // CART
 router.post("/cart", addToCart);

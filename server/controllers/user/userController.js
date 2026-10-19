@@ -100,18 +100,19 @@ const updateProfile = async (req, res) => {
   try {
     const userId = req.userId; // auth middleware from token
 
-    const { name,email, phone } = req.body;
+    const { name, email, phone } = req.body;
+    const updateData = {};
+
+    if (name) updateData.name = name;
+    if (email) updateData.email = email;
+    if (phone !== undefined) updateData.phone = phone;
+    if (req.file) updateData.image = req.file.path;
 
     const updatedUser = await User.findByIdAndUpdate(
       userId,
-      {
-        name,
-        email,
-        phone 
-
-      },
-      { new: true }
-    );
+      updateData,
+      { new: true, runValidators: true }
+    ).select("-password");
 
     res.json(updatedUser);
   } catch (error) {

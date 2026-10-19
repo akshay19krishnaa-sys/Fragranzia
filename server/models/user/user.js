@@ -24,12 +24,18 @@ const userSchema = new mongoose.Schema(
     },
     phone: {
       type: String,
-      // required: [true, "Phone number is required"],
-      match: [/^\d{10}$/, "Phone number must be exactly 10 digits"],
       default: "",
-
+      validate: {
+        validator: function (v) {
+          return !v || /^\d{10}$/.test(v);
+        },
+        message: "Phone number must be exactly 10 digits",
+      },
     },
-    image: { type: String },
+    image: {
+      type: String,
+      default: "",
+    },
 
     status: {
       type: Boolean,
