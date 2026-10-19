@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import ProfileInfo from "./ProfileInfo";
 import AddressTab from "./AddressTab";
 import OrdersTab from "./OrdersTab";
+import { toast } from "react-toastify";
 
 function Profile() {
 const navigate = useNavigate();
@@ -16,7 +17,11 @@ const location = useLocation();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("adminToken");
     localStorage.removeItem("user");
+    localStorage.removeItem("admin");
+    localStorage.removeItem("role");
+    toast.success("Logged out successfully");
     navigate("/login");
   };
 

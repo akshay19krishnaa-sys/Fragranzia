@@ -58,8 +58,6 @@ function OrdersTab() {
 
     try {
 
-      if (!window.confirm("Cancel this order?")) return;
-
       await cancelOrder(id);
 
       const updated = await getUserOrders();

@@ -7,23 +7,21 @@ import { MdLocalOffer } from "react-icons/md";
 import { RiCoupon2Line } from "react-icons/ri";
 import { MdManageAccounts } from "react-icons/md";
 import { FiShoppingCart } from "react-icons/fi";
+import { toast } from "react-toastify";
 import "../admin/adminside.css";
 
 const AdminSidebar = () => {
     const navigate = useNavigate();
 
  const handleLogout = () => {
-  const confirmLogout = window.confirm(
-    "Are you sure you want to logout?"
-  );
-
-  if (!confirmLogout) return;
-
   // Clear all login data
   localStorage.removeItem("token");
+  localStorage.removeItem("adminToken");
   localStorage.removeItem("user");
+  localStorage.removeItem("admin");
   localStorage.removeItem("role");
 
+  toast.success("Logged out successfully");
   navigate("/login");
 };
   return (
