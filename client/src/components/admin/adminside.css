@@ -123,3 +123,104 @@
     outline: none;
     box-shadow: none;
 }
+
+/* Custom Logout Modal */
+.logout-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(3px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    padding: 20px;
+    animation: logoutFadeIn 0.2s ease-out;
+}
+
+.logout-modal-content {
+    background-color: #ffffff;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 400px;
+    padding: 26px 28px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    animation: logoutScaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.logout-modal-header h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+}
+
+.logout-modal-body p {
+    font-size: 14px;
+    color: #555555;
+    line-height: 1.5;
+    margin-bottom: 24px;
+}
+
+.logout-modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.logout-modal-btn {
+    flex: 1;
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.logout-modal-btn.cancel {
+    background-color: #f1f3f5;
+    color: #495057;
+    border: 1px solid #dee2e6;
+}
+
+.logout-modal-btn.cancel:hover {
+    background-color: #e9ecef;
+    color: #212529;
+}
+
+.logout-modal-btn.confirm {
+    background-color: rgb(49, 140, 49);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(49, 140, 49, 0.25);
+}
+
+.logout-modal-btn.confirm:hover {
+    background-color: rgb(40, 120, 40);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(49, 140, 49, 0.35);
+}
+
+.logout-modal-btn:active {
+    transform: scale(0.98);
+}
+
+@keyframes logoutFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes logoutScaleUp {
+    from {
+        opacity: 0;
+        transform: scale(0.92);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
