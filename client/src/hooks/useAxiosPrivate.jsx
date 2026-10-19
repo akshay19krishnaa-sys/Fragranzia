@@ -6,26 +6,19 @@ const useAxiosPrivate = () => {
   const { auth } = useAuth();
 
   useEffect(() => {
-    const requestInterceptor = axiosPrivate.interceptors.request.use(
-      (config) => {
-        const token = localStorage.getItem("token");
-
-        if (token) {
-          config.headers.Authorization = `Bearer ${token}`;
-        }
-
-        return config;
-      },
-      (error) => Promise.reject(error)
-    );
-
+    // Response interceptor to handle errors gracefully
     const responseInterceptor = axiosPrivate.interceptors.response.use(
       (response) => response,
-      (error) => Promise.reject(error)
+      (error) => {
+        if (error.response?.status === 401) {
+          // Token expired or invalid
+          console.warn("401 Unauthorized received on private request");
+        }
+        return Promise.reject(error);
+      }
     );
 
     return () => {
-      axiosPrivate.interceptors.request.eject(requestInterceptor);
       axiosPrivate.interceptors.response.eject(responseInterceptor);
     };
   }, [auth]);

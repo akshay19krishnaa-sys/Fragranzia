@@ -110,7 +110,7 @@ const handleAddCart = async () => {
 
         <div className="like-icon">
           <button onClick={handleWishlist}>
-            {wishItem.some(item => item._id === product._id)
+            {wishItem.some(item => (item._id ? item._id.toString() : item.toString()) === product._id.toString())
   ? <FcLike />
   : <CiHeart />
 }

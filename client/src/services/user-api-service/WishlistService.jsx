@@ -5,8 +5,20 @@ const WishlistService = () => {
 
   // Get Wishlist
   const getWishlist = async () => {
-    const res = await axiosPrivate.get("/api/wishlist/get");
-    return res.data.wishlist;
+    const token = localStorage.getItem("token") || localStorage.getItem("accessToken");
+    if (!token || token === "null" || token === "undefined") {
+      return [];
+    }
+
+    try {
+      const res = await axiosPrivate.get("/api/wishlist/get");
+      return res.data?.wishlist || [];
+    } catch (error) {
+      if (error.response?.status === 401) {
+        return [];
+      }
+      throw error;
+    }
   };
 
   // Add To Wishlist
@@ -14,7 +26,6 @@ const WishlistService = () => {
     const res = await axiosPrivate.post("/api/wishlist/addwish", {
       productId,
     });
-
     return res.data;
   };
 
@@ -23,7 +34,6 @@ const WishlistService = () => {
     const res = await axiosPrivate.delete(
       `/api/wishlist/remove/${productId}`
     );
-
     return res.data;
   };
 
@@ -32,7 +42,6 @@ const WishlistService = () => {
     const res = await axiosPrivate.post("/api/wishlist/toggle", {
       productId,
     });
-
     return res.data;
   };
 

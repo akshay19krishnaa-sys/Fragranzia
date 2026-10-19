@@ -101,7 +101,11 @@ const handleAddCart = async (productId) => {
 
 
 const isInWishlist = (id) => {
-  return wishlist.some((item) => item._id === id);
+  if (!id || !wishlist) return false;
+  return wishlist.some((item) => {
+    const itemId = item._id ? item._id.toString() : item.toString();
+    return itemId === id.toString();
+  });
 };
 
 
