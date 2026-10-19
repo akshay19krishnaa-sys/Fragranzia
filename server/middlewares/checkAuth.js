@@ -17,8 +17,7 @@ const checkAuth = (req, res, next) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // 🔥 IMPORTANT: your JWT uses { id: user._id }
-    req.userId = decoded._id;
+    req.userId = decoded._id || decoded.id;
     console.log("AUTH HEADER:", req.headers.authorization);
 
     next();

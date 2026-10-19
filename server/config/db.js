@@ -1,13 +1,20 @@
 const mongoose = require("mongoose");
 
+let cachedConnection = null;
+
 const connectDb = async () => {
-  try {
-    const connection = await mongoose.connect("mongodb://localhost:27017/Fragranzia");
-    console.log("Database Connected: " + connection.connection.name);
-  } catch (error) {
-    console.log(error);
+  if (cachedConnection && mongoose.connection.readyState === 1) {
+    return cachedConnection;
   }
 
+  try {
+    const connection = await mongoose.connect(process.env.MONGO_URI);
+    cachedConnection = connection;
+    console.log("Database Connected: " + connection.connection.name);
+    return cachedConnection;
+  } catch (error) {
+    console.error("Database Connection Error:", error);
+  }
 };
 
 module.exports = connectDb;

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../../../style/ordertab.css";
 import { toast } from "react-toastify";
 import OrderService from "../../../services/user-api-service/OrderService";
+import { getImageUrl } from "../../../axios";
 
 function OrdersTab() {
 
@@ -281,7 +282,7 @@ function OrdersTab() {
                         <div className="product-cell">
 
                           <img
-                            src={`https://fragranzia-rf6r.onrender.com/uploads/${item.productImage}`}
+                            src={getImageUrl(item.productImage)}
                             alt={item.productName}
                           />
 

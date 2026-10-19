@@ -1,5 +1,6 @@
 import axios from "axios";
 import useAdminAxiosPrivate from "../../hooks/useAdminAxiosPrivate";
+import { BASE_URL } from "../../axios";
 
 const AdminService = () => {
 
@@ -9,7 +10,7 @@ const AdminService = () => {
   const registerAdmin = async (data) => {
 
     const response = await axios.post(
-      "https://fragranzia-rf6r.onrender.com/api/admin/register",
+      `${BASE_URL}/api/admin/register`,
       data
     );
 
@@ -22,7 +23,7 @@ const AdminService = () => {
   const loginAdmin = async (data) => {
 
     const response = await axios.post(
-      "https://fragranzia-rf6r.onrender.com/api/admin/login",
+      `${BASE_URL}/api/admin/login`,
       data
     );
 

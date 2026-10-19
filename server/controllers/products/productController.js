@@ -72,9 +72,7 @@ const postProducts = async (req, res) => {
   try {
 
     // uploaded image paths
-const imagePaths = req.files.map(
-  (file) => file.filename
-);
+const imagePaths = req.files.map((file) => file.path);
 
     const newproducts = await Product.create({
 
@@ -119,9 +117,8 @@ const updateProduct = async (req, res) => {
     };
 
     if (req.file) {
-      updateData.images = req.file.filename;
-    
-    }
+  updateData.images = [req.file.path];
+}
 
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,

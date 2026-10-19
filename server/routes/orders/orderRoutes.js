@@ -94,7 +94,11 @@ router.get(
   getOrderById
 );
 
-router.post("/razorpay/create-order", createRazorpayOrder);
+router.post(
+  "/razorpay/create-order",
+  checkAuth,
+  createRazorpayOrder
+);
 
 router.post(
   "/razorpay/verify-payment",

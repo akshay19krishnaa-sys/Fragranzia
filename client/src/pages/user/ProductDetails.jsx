@@ -8,6 +8,7 @@ import CartService from "../../services/user-api-service/CartService";
 import WishlistService from "../../services/user-api-service/WishlistService";
 import UserService from "../../services/user-api-service/UserService";
 import { toast } from "react-toastify";
+import { getImageUrl } from "../../axios";
 
 
 
@@ -103,7 +104,7 @@ const handleAddCart = async () => {
 
       <div className="product-main">
                              <img
-  src={`https://fragranzia-rf6r.onrender.com/uploads/${product.images[0]}`}
+  src={getImageUrl(product.images?.[0])}
   alt="" width="200"
 />
 

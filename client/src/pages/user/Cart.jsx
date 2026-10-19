@@ -3,6 +3,7 @@ import "../../style/cart.css";
 import axios from "axios";
 import CartService from "../../services/user-api-service/CartService";
 import { useNavigate } from "react-router-dom";
+import { getImageUrl } from "../../axios";
 
 
 
@@ -83,7 +84,7 @@ const totalAmount = Products.reduce((total, item) => {
               >
                 <div className="cart-image">
                   <img
-                    src={`https://fragranzia-rf6r.onrender.com/uploads/${item.product.images[0]}`}
+                    src={getImageUrl(item.product.images?.[0])}
                     alt={item.product.title}
                   />
                 </div>

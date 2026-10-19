@@ -15,6 +15,7 @@ import CartService from "../../services/user-api-service/CartService";
 import WishlistService from "../../services/user-api-service/WishlistService";
 import { toast } from 'react-toastify';
 import { Link, useNavigate } from "react-router-dom";
+import { getImageUrl } from "../../axios";
 
 
 const Home = () => {
@@ -269,7 +270,7 @@ const isLoggedIn = !!token;
 </div>
 
   <img
-    src={`https://fragranzia-rf6r.onrender.com/uploads/${item.images[0]}`}
+    src={getImageUrl(item.images?.[0])}
     alt=""
   />
 
@@ -306,7 +307,7 @@ const isLoggedIn = !!token;
       {Products.map((item) => (
         <div key={item._id} className='explore-item-home'>
             <img
-  src={`https://fragranzia-rf6r.onrender.com/uploads/${item.images[0]}`}
+  src={getImageUrl(item.images?.[0])}
   alt=""
 />
           <h5>{item.title}</h5>
@@ -326,7 +327,7 @@ const isLoggedIn = !!token;
   onClick={() => navigate(`/product/${item._id}`)}
 >
            <img
-  src={`https://fragranzia-rf6r.onrender.com/uploads/${item.images[0]}`}
+  src={getImageUrl(item.images?.[0])}
   alt=""
 />
           <h5>{item.title}</h5>

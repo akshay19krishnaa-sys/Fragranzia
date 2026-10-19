@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import "./adminOrders.css";
 import { toast } from "react-toastify";
 import AdminOrderService from "../../services/admin-api-service/AdminOrderService";
+import { getImageUrl } from "../../axios";
 
 function AdminOrders() {
  const {
@@ -227,7 +228,7 @@ const handleRejectReturn = async (id) => {
                     >
 
                       <img
-                        src={`https://fragranzia-rf6r.onrender.com/uploads/${item.productImage}`}
+                        src={getImageUrl(item.productImage)}
                         alt={item.productName}
                       />
 
@@ -412,7 +413,7 @@ const handleRejectReturn = async (id) => {
                   >
 
                     <img
-                      src={`https://fragranzia-rf6r.onrender.com/uploads/${item.productImage}`}
+                      src={getImageUrl(item.productImage)}
                       alt={item.productName}
                     />
 

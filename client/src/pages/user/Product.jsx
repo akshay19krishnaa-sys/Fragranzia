@@ -6,6 +6,7 @@ import UserService from "../../services/user-api-service/UserService";
 import CartService from "../../services/user-api-service/CartService";
 import WishlistService from "../../services/user-api-service/WishlistService";
 import { toast } from "react-toastify";
+import { getImageUrl } from "../../axios";
 
 const Product = () => {
   const { getUserProducts } = UserService();
@@ -187,7 +188,7 @@ const handleWishlist = async (productId) => {
               </div>
 
               <img
-                src={`https://fragranzia-rf6r.onrender.com/uploads/${item.images[0]}`}
+                src={getImageUrl(item.images?.[0])}
                 alt=""
               />
 

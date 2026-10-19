@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import UserService from "../../services/user-api-service/UserService";
+import { getImageUrl } from "../../axios";
 
 
 function AdminPage() {
@@ -240,7 +241,7 @@ const handleToggleBlock = async (productId) => {
 
           <img
             key={index}
-            src={`https://fragranzia-rf6r.onrender.com/uploads/${img}`}
+            src={getImageUrl(img)}
            alt={showProduct.title}
           />
 

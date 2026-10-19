@@ -7,6 +7,7 @@ import { MdDelete } from "react-icons/md";
 import WishlistService from "../../services/user-api-service/WishlistService";
 import CartService from "../../services/user-api-service/CartService";
 import { toast } from "react-toastify";
+import { getImageUrl } from "../../axios";
 
 const Wishlist = () => {
 
@@ -140,7 +141,7 @@ const Wishlist = () => {
 
 
                     <img
-                      src={`https://fragranzia-rf6r.onrender.com/uploads/${item.images[0]}`}
+                      src={getImageUrl(item.images?.[0])}
                       alt={item.title}
                     />
 

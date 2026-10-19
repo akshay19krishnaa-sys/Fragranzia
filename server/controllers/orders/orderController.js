@@ -377,38 +377,47 @@ const rejectReturn = async (req, res) => {
 
 
 const createRazorpayOrder = async (req, res) => {
-    try {
-        const { amount } = req.body;
+  try {
+    const { amount } = req.body;
+    const numAmount = Number(amount);
 
-        if (!amount) {
-            return res.status(400).json({
-                success: false,
-                message: "Amount is required",
-            });
-        }
+    if (!amount || isNaN(numAmount) || numAmount <= 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Valid positive amount is required",
+      });
+    }
 
-        const options = {
-            amount: Math.round(amount * 100), // ₹ → paise
-            currency: "INR",
-            receipt: `receipt_${Date.now()}`,
-        };
+    const keyId = (process.env.RAZORPAY_KEY_ID || "").trim();
+    if (!keyId) {
+      return res.status(500).json({
+        success: false,
+        message: "Razorpay Key ID is not configured on server",
+      });
+    }
 
-        const order = await razorpay.orders.create(options);
+    const options = {
+      amount: Math.round(numAmount * 100), // ₹ → paise
+      currency: "INR",
+      receipt: `receipt_${Date.now()}`,
+    };
 
-        res.status(200).json({
-            success: true,
-            order,
-        });
+    const order = await razorpay.orders.create(options);
 
-    } catch (error) {
+    res.status(200).json({
+      success: true,
+      keyId,
+      order,
+    });
+  } catch (error) {
     console.error("Razorpay Order Error:", error);
 
     res.status(500).json({
-        success: false,
-        message: "Failed to create Razorpay order",
-        error: error.message,
+      success: false,
+      message: "Failed to create Razorpay order",
+      error: error.message || error,
     });
-}
+  }
 };
 
 const verifyRazorpayPayment = async (req, res) => {
@@ -430,14 +439,29 @@ const verifyRazorpayPayment = async (req, res) => {
       });
     }
 
+    const secret = (process.env.RAZORPAY_KEY_SECRET || "").trim();
+    if (!secret) {
+      return res.status(500).json({
+        success: false,
+        message: "Razorpay Secret Key is not configured on server",
+      });
+    }
+
     const generatedSignature = crypto
-      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
-      .update(
-        `${razorpay_order_id}|${razorpay_payment_id}`
-      )
+      .createHmac("sha256", secret)
+      .update(`${razorpay_order_id.trim()}|${razorpay_payment_id.trim()}`)
       .digest("hex");
 
-    if (generatedSignature !== razorpay_signature) {
+    const userSignature = razorpay_signature.trim();
+
+    const isMatch =
+      generatedSignature.length === userSignature.length &&
+      crypto.timingSafeEqual(
+        Buffer.from(generatedSignature, "utf-8"),
+        Buffer.from(userSignature, "utf-8")
+      );
+
+    if (!isMatch) {
       return res.status(400).json({
         success: false,
         message: "Invalid payment signature",
@@ -448,13 +472,13 @@ const verifyRazorpayPayment = async (req, res) => {
       success: true,
       message: "Payment verified successfully",
     });
-
   } catch (error) {
     console.error("Payment Verification Error:", error);
 
     res.status(500).json({
       success: false,
       message: "Payment verification failed",
+      error: error.message || error,
     });
   }
 };

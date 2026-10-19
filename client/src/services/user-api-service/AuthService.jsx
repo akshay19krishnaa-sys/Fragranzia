@@ -1,4 +1,5 @@
 import axios from "axios";
+import { BASE_URL } from "../../axios";
 
 const AuthService = () => {
 
@@ -6,7 +7,7 @@ const AuthService = () => {
   const login = async (data) => {
 
     const res = await axios.post(
-      "https://fragranzia-rf6r.onrender.com/api/users/login",
+      `${BASE_URL}/api/users/login`,
       data
     );
 
@@ -17,7 +18,7 @@ const AuthService = () => {
   const register = async (data) => {
 
     const res = await axios.post(
-      "https://fragranzia-rf6r.onrender.com/api/users/register",
+      `${BASE_URL}/api/users/register`,
       data
     );
 
