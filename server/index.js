@@ -8,9 +8,15 @@ const wishlistRoutes = require("./routes/user/wishlistRoutes");
 const cartRoutes = require("./routes/user/cartRoutes");
 const userRoutes = require("./routes/user/userRoutes");
 const addressRoutes = require("./routes/user/addressRoutes");
+const mongoose = require("mongoose");
 const connectDb = require("./config/db");
 const orderRoutes = require("./routes/orders/orderRoutes");
 const adminRoutes = require("./routes/admin/adminRoutes");
+
+// Connect to MongoDB immediately on startup
+connectDb().catch((err) => {
+  console.error("Initial MongoDB connection error:", err.message);
+});
 
 const app = express();
 
@@ -22,15 +28,32 @@ app.use(cors({
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
-// Ensure DB is connected for serverless invocations
+// Ensure DB is connected before processing requests
 app.use(async (req, res, next) => {
-  await connectDb();
-  next();
+  // Allow health check without blocking
+  if (req.path === "/api/health") return next();
+
+  try {
+    await connectDb();
+    next();
+  } catch (error) {
+    return res.status(503).json({
+      success: false,
+      message: "Database connection failed. Please ensure MongoDB Atlas IP Access List allows access from anywhere (0.0.0.0/0) and MONGO_URI is set.",
+      error: error.message,
+    });
+  }
 });
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {
-  res.json({ status: "ok", message: "Fragranzia API is running" });
+  const state = mongoose.connection.readyState;
+  const states = ["disconnected", "connected", "connecting", "disconnecting"];
+  res.json({
+    status: state === 1 ? "ok" : "db_disconnected",
+    database: states[state] || "unknown",
+    message: "Fragranzia API is running",
+  });
 });
 
 app.use("/api/products", productRoutes);

@@ -7,13 +7,22 @@ const connectDb = async () => {
     return cachedConnection;
   }
 
+  if (!process.env.MONGO_URI) {
+    const errorMsg = "MONGO_URI is not defined in environment variables!";
+    console.error(errorMsg);
+    throw new Error(errorMsg);
+  }
+
   try {
-    const connection = await mongoose.connect(process.env.MONGO_URI);
+    const connection = await mongoose.connect(process.env.MONGO_URI, {
+      serverSelectionTimeoutMS: 8000,
+    });
     cachedConnection = connection;
     console.log("Database Connected: " + connection.connection.name);
     return cachedConnection;
   } catch (error) {
-    console.error("Database Connection Error:", error);
+    console.error("Database Connection Error:", error.message || error);
+    throw error;
   }
 };
 
