@@ -93,7 +93,7 @@ const AdminSidebar = () => {
               <h3 id="logout-modal-title">Confirm Logout</h3>
             </div>
             <div className="logout-modal-body">
-              <p>Are you sure you want to log out of your account?</p>
+              <p>Are you sure you want to logout?</p>
             </div>
             <div className="logout-modal-actions">
               <button
@@ -108,7 +108,7 @@ const AdminSidebar = () => {
                 className="logout-modal-btn confirm"
                 onClick={handleConfirmLogout}
               >
-                Log Out
+                Confirm Logout
               </button>
             </div>
           </div>
