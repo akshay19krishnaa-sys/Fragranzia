@@ -45,10 +45,10 @@ function EditCategory() {
     try {
       await updateCategory(id, category);
       toast.success("Category Updated Successfully");
-      navigate("/categories");
+      navigate("/admin/categories");
     } catch (error) {
       console.log(error);
-      toast.success("Failed to update category");
+      toast.error("Failed to update category");
     }
   };
 

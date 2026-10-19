@@ -13,32 +13,30 @@ import { useNavigate } from "react-router-dom";
 
 
 const Navbar = () => {
+    const navigate = useNavigate();
+    const [cartItem, setcartItem] = useState([]);
+    const [cartOpen, setCartOpen] = useState(false);
+    const [showMsg, setShowMsg] = useState(false);
+    const [search, setSearch] = useState("");
 
-     const[cartItem,setcartItem] = useState([])
-        const [cartOpen, setCartOpen] = useState(false)
-        const [showMsg, setShowMsg] = useState(false);
-        const [search, setSearch] = useState("");
+    const handleSearch = (value) => {
+      setSearch(value);
+      localStorage.setItem("search", value);
+    };
 
-        const handleSearch = (value) => {
-  setSearch(value);
-  localStorage.setItem("search", value);
-};
-
-const handleKeyDown = (e) => {
-  if (e.key === "Enter") {
-    navigate(`/product?search=${search}`);
-  }
-};
-
-    
-
-
+    const handleKeyDown = (e) => {
+      if (e.key === "Enter") {
+        navigate(`/product?search=${encodeURIComponent(search)}`);
+      }
+    };
 
     return (
         <>
         <nav>
-            <div className="nav-head">
-        <h2>Fragranzia</h2>
+        <div className="nav-head">
+          <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+            <h2>Fragranzia</h2>
+          </Link>
         </div>
 
         <div className="nav-items">
@@ -48,13 +46,13 @@ const handleKeyDown = (e) => {
                 <button><li> <Link to="/"> Home </Link></li></button>
                 <button><li><Link to="/product"> Product </Link></li></button>
                 {/* <button><li><Link to="/Gifting"> Gifting </Link></li></button> */}
-                <button><li><Link to="/About"> About </Link></li></button>
+                <button><li><Link to="/about"> About </Link></li></button>
             </ul>
         </div>
         <div className="nav-search">
              <CiSearch
   className="search-icon"
-  onClick={() => navigate(`/product?search=${search}`)}
+  onClick={() => navigate(`/product?search=${encodeURIComponent(search)}`)}
 />
   <input
   type="text"
@@ -65,10 +63,10 @@ const handleKeyDown = (e) => {
 />
         </div>
         <div className="nav-icons">
-           <button ><Link to="/Cart"> <HiOutlineShoppingBag /></Link></button> 
+           <button><Link to="/cart"> <HiOutlineShoppingBag /></Link></button> 
            <button><Link to="/wishlist"><FaRegHeart /></Link></button>
            {/* <button><Link to="/Notification"> <CiBellOn /></Link> </button>   */}
-           <button><Link to="/Profile"> <FaUserCircle /></Link></button> 
+           <button><Link to="/profile"> <FaUserCircle /></Link></button> 
         </div>
         </div>
         </nav>

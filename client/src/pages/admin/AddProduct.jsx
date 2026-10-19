@@ -88,7 +88,7 @@ function AddProduct() {
 
     toast.success("Product Added Successfully");
 
-     navigate("/adminpage");
+    navigate("/admin/adminpage");
 
   } catch (error) {
 

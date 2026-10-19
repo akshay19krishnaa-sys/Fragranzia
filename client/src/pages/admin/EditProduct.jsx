@@ -104,7 +104,7 @@ function EditProduct() {
     await updateProduct(id, formData);
 
     toast.success("Product Updated");
-    navigate("/adminpage");
+    navigate("/admin/adminpage");
 
   } catch (error) {
     console.log(error);

@@ -1,4 +1,4 @@
-import { Routes, Route} from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import './App.css'
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -42,62 +42,51 @@ function App() {
   return (
     <>
       <Routes>
+        {/* Admin Routes */}
+        <Route path="/admin" element={<AdminProtectRouter />}>
+          <Route index element={<Navigate to="dashboard" replace />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="adminpage" element={<AdminPage />} />
+          <Route path="addproduct" element={<AddProduct />} />
+          <Route path="editproduct/:id" element={<EditProduct />} />
+          <Route path="categories" element={<Categories />} />
+          <Route path="addcategory" element={<AddCategory />} />
+          <Route path="editcategory/:id" element={<EditCategory />} />
+          <Route path="orders" element={<Adminorders />} />
+          <Route path="profile" element={<AdminProfile />} />
+          <Route path="customers" element={<Customers />} />
+        </Route>
 
-       
+        {/* Admin Legacy / Direct Alias Redirects */}
+        <Route path="/adminpage" element={<Navigate to="/admin/adminpage" replace />} />
+        <Route path="/categories" element={<Navigate to="/admin/categories" replace />} />
+        <Route path="/dashboard" element={<Navigate to="/admin/dashboard" replace />} />
 
-       <Route path="/admin" element={<AdminProtectRouter/>}>
+        {/* Public User Routes */}
+        <Route element={<UserProductRouter />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/product" element={<Product />} />
+          <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/about" element={<About />} />
+        </Route>
 
-  <Route path="adminpage" element={<AdminPage/>} />
+        {/* Protected User Routes */}
+        <Route element={<PrivateRoute />}>
+          <Route element={<UserProductRouter />}>
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/addaddress" element={<AddAddress />} />
+            <Route path="/editaddress/:id" element={<EditAddress />} />
+            <Route path="/order" element={<Order />} />
+            <Route path="/ordersuccess/:id" element={<OrderSuccess />} />
+          </Route>
+        </Route>
 
-  <Route path="addproduct" element={<AddProduct />} />
-
-  <Route path="editproduct/:id" element={<EditProduct />} />
-
-  <Route path="categories" element={<Categories />} />
-
-  <Route path="addcategory" element={<AddCategory />} />
-
-  <Route path="editcategory/:id" element={<EditCategory />} />
-
-  <Route path="orders" element={<Adminorders/>} />
-
-  <Route path="profile" element={<AdminProfile /> }/>
-
-  <Route path="/admin/customers" element={<Customers /> }/>
-
-  <Route path="/admin/dashboard" element={<Dashboard />} />
-
-</Route>
-
-
-       
-      
-      
-
-<Route element={<UserProductRouter />}>
- <Route path="/login" element={<Login />} />
-  <Route path="/signup" element={<Signup />} />
-  <Route path="/" element={<Home />} />
-  <Route path="/product" element={<Product />} />
-  <Route path="/product/:id" element={<ProductDetails />} />
-  <Route path="/about" element={<About />} />
-
-</Route>
-
-<Route element={<PrivateRoute />}>
-  <Route element={<UserProductRouter />}>
-    <Route path="/profile" element={<Profile />} />
-    <Route path="/cart" element={<Cart />} />
-    <Route path="/wishlist" element={<Wishlist />} />
-    <Route path="/addaddress" element={<AddAddress />} />
-    <Route path="/editaddress/:id" element={<EditAddress />} />
-    <Route path="/order" element={<Order />} />
-    <Route path="/ordersuccess/:id" element={<OrderSuccess />} />
-  </Route>
-</Route>
-       
-
-
+        {/* 404 Catch-All Fallback */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
 
        <ToastContainer

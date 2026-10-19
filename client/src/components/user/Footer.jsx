@@ -26,10 +26,9 @@ const Footer = () =>{
             <div className="main1-footer">
                 <div className="pages-footer">
                     <h4>Pages</h4>
-                    <p>home</p>
-                    <p>product</p>
-                    <p>gifting</p>
-                    <p>about</p>
+                    <p><Link to="/" style={{ color: "inherit", textDecoration: "none" }}>home</Link></p>
+                    <p><Link to="/product" style={{ color: "inherit", textDecoration: "none" }}>product</Link></p>
+                    <p><Link to="/about" style={{ color: "inherit", textDecoration: "none" }}>about</Link></p>
                 </div>
                 <div className="links-footer">
                     <h4>Quick-links</h4>

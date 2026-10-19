@@ -1,200 +1,194 @@
-import { useState } from 'react'
-import { Link } from "react-router-dom";
+import { useState } from 'react';
+import { Link, useNavigate } from "react-router-dom";
 import "../../style/login.css";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
 import AuthService from "../../services/user-api-service/AuthService";
 
-
-
 const Login = () => {
+  const { login } = AuthService();
 
-    const { login } = AuthService();
-
-    const [formData,setFormData] = useState({
-  
+  const [formData, setFormData] = useState({
     email: "",
     password: ""
- })
-    const [FormErr,setFormErr] = useState(
-        {
+  });
 
-            email:false, 
-            password:false,
-            
-            
+  const [FormErr, setFormErr] = useState({
+    email: false,
+    password: false
+  });
 
+  const [showPassword, setShowPassword] = useState(false);
 
-        }
-    )
+  const navigate = useNavigate();
+  const { setAuth } = useAuth();
 
-     const navigate = useNavigate();
-     const { setAuth } = useAuth();
+  const onHandleSubmit = async (e) => {
+    e.preventDefault();
 
-const onHandleSubmit = async (e) => {
-  e.preventDefault();
+    let hasError = false;
+    const err = { email: false, password: false };
 
-  try {
-    const res = await login(formData);
-    console.log(res);
+    if (!formData.email.trim()) {
+      err.email = true;
+      hasError = true;
+    }
+    if (!formData.password) {
+      err.password = true;
+      hasError = true;
+    }
 
-    // ✅ Remove old admin login
-    localStorage.removeItem("adminToken");
-    localStorage.removeItem("admin");
+    setFormErr(err);
+    if (hasError) return;
 
-   setAuth({
-  accessToken: res.token,
-  user: res.user,
-});
+    try {
+      const res = await login(formData);
 
-localStorage.setItem("token", res.token);
-localStorage.setItem("user", JSON.stringify(res.user));
-localStorage.setItem("role", res.role);
+      // Remove old admin login
+      localStorage.removeItem("adminToken");
+      localStorage.removeItem("admin");
 
-toast.success("Login successful");
+      setAuth({
+        accessToken: res.token,
+        user: res.user,
+      });
 
-if (res.role === "admin") {
-  navigate("/admin/dashboard");
-} else {
-  navigate("/");
-}
-  } catch (error) {
-    console.log("ERROR:", error);
-    console.log("RESPONSE:", error.response);
-    console.log("DATA:", error.response?.data);
+      localStorage.setItem("token", res.token);
+      localStorage.setItem("user", JSON.stringify(res.user));
+      localStorage.setItem("role", res.role);
 
-    toast.error(error.response?.data?.message || "Login Failed");
-  }
-};
+      toast.success("Login successful");
 
-    const handleChange = (e)=>{
+      if (res.role === "admin") {
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/");
+      }
+    } catch (error) {
+      console.log("ERROR:", error);
+      console.log("RESPONSE:", error.response);
+      console.log("DATA:", error.response?.data);
 
-        setFormData((prev)=>({
-        ...prev,
-        [e.target.name]: e.target.value
+      toast.error(error.response?.data?.message || "Login Failed");
+    }
+  };
 
-    }))
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
     setFormErr((prev) => ({
-    ...prev,
-     [e.target.name]: false
-  }));
+      ...prev,
+      [name]: false
+    }));
+  };
 
+  const onHandleBlur = (e) => {
+    const { name, value } = e.target;
+    let isErr = !value.trim();
+
+    if (name === "email" && value.trim()) {
+      isErr = !/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value.trim());
     }
 
+    setFormErr((prev) => ({
+      ...prev,
+      [name]: isErr
+    }));
+  };
 
-    
-    let onHandleBlur = (e) => {
-        let {name} = e.target
-        let err = formData[name] ==""
-         
-
-
-        
-         if (name == "email" && formData.email == ""){
-            err = true
-        }
-        
-         else if ( name == "password" && formData.password == ""){
-            err = true
-        }
-        
-
-        setFormErr(prev => ({
-            ...prev,
-            [name]: err
-        }))
-
-    }
-
-
-
-
-  return(
+  return (
     <div className="main-login">
-    <div className="text-login">
+      <div className="text-login">
         <div className="text1-login">
-            <h1>Welcome Back!</h1>
-            <h4>CGlad to see you again! Access your <br/>account to explore more
-            </h4>
+          <h1>Welcome Back!</h1>
+          <h4>
+            Glad to see you again! Access your <br />account to explore more
+          </h4>
         </div>
-    </div>
-    <div className="login-login">
+      </div>
+      <div className="login-login">
         <div className="logo-text-login">
+          <button type="button" className="google-btn-login">
+            <img src="/googlelogo.png" alt="Google" />
+            <span>Google</span>
+          </button>
 
-            <button className="google-btn-login">
-                <img src="googlelogo.png" alt=""/>
-                <span>Google</span>
-            </button>
-
-
-            <button className="google-btn-login">
-                <img src="download-removebg-preview.png" alt=""/>
-                <span>Facebook</span>
-            </button>
-
+          <button type="button" className="google-btn-login">
+            <img src="/download-removebg-preview.png" alt="Facebook" />
+            <span>Facebook</span>
+          </button>
         </div>
-        <div className="line">
-            <div className="hr-line-login">
 
-                <p></p>
-            </div>
-            <div className="line-text-login">
-                <p>or sign up with email</p>
-            </div>
-            <div className="hr-line-login">
-                <p></p>
-            </div>
-
-
+        <div className="line-login">
+          <div className="hr-line-login"></div>
+          <div className="line-text-login">
+            <p>or login with email</p>
+          </div>
+          <div className="hr-line-login"></div>
         </div>
-         <form onSubmit={onHandleSubmit}>
-    
-    
 
-    <div className="form-group-login">
-        <i className="bi bi-lock"></i>
-        <input 
-            type="email"
-            name="email"
-            value={formData.email || ""}
-            placeholder="enter email"
-            onChange={handleChange}
-            onBlur={onHandleBlur}
-        />
-        <p className="error-login">
-            {FormErr.email && "enter valid email"}
-        </p>
-    </div>
+        <form onSubmit={onHandleSubmit}>
+          <div className="form-group-login">
+            <div className="input-box-login">
+              <i className="bi bi-envelope"></i>
+              <input
+                type="email"
+                name="email"
+                value={formData.email || ""}
+                placeholder="enter email"
+                onChange={handleChange}
+                onBlur={onHandleBlur}
+                autoComplete="email"
+              />
+            </div>
+            {FormErr.email && (
+              <p className="error-login">enter valid email</p>
+            )}
+          </div>
 
-    <div className="form-group-login">
-        <i className="bi bi-lock"></i>
-        <input 
-            type="password"
-            name="password"
-            value={formData.password ||""}
-            placeholder="enter password"
-            onChange={handleChange}
-            onBlur={onHandleBlur}
-        />
-        <p className="error-login">
-            {FormErr.password && "enter password"}
-        </p>
-    </div>
+          <div className="form-group-login">
+            <div className="input-box-login">
+              <i className="bi bi-lock"></i>
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={formData.password || ""}
+                placeholder="enter password"
+                onChange={handleChange}
+                onBlur={onHandleBlur}
+                autoComplete="current-password"
+              />
+              <button
+                type="button"
+                className="toggle-password-login"
+                onClick={() => setShowPassword(!showPassword)}
+                tabIndex="-1"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                <i className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"}`}></i>
+              </button>
+            </div>
+            {FormErr.password && (
+              <p className="error-login">enter password</p>
+            )}
+          </div>
 
-    <button type="submit" className="signup-btn-login">
-        login
-    </button>
+          <button type="submit" className="signup-btn-login">
+            Login
+          </button>
+        </form>
 
-</form>
-        
         <div className="signin-login">
-               <p>Don't have a account? <Link to="/signup"> Sign up </Link></p> 
-            </div>
-
+          <p>
+            Don't have an account? <Link to="/signup">Sign up</Link>
+          </p>
+        </div>
+      </div>
     </div>
-    </div>
-  ) 
+  );
 };
 
 export default Login;
