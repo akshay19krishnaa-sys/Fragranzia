@@ -27,6 +27,10 @@
       "dest": "/client/assets/$1"
     },
     {
+      "src": "/((?!api/|uploads/).*\\.(?:png|jpg|jpeg|gif|svg|webp|ico|txt|woff2?|eot|ttf|json))",
+      "dest": "/client/$1"
+    },
+    {
       "handle": "filesystem"
     },
     {

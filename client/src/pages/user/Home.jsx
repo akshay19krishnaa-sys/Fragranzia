@@ -158,11 +158,11 @@ const isLoggedIn = !!token;
                 <div className="blueper-boxtext">
                     <h1>Discover perfumes that <br/> celebrate individuality</h1>
                     <p>every moment with an unforgettable <br/> essence.</p>
-                    <button>Shop Now</button>
+                    <button onClick={() => navigate("/product")}>Shop Now</button>
                 </div>
                 <div className="blueper-boximg">
-                    <img className="blueper-img" src="blue-perfume.png"/>
-                    <img className="blueper-imgg" src="blue-perfume.png"/>
+                    <img className="blueper-img" src="/blue-perfume.png" alt="Blue Perfume" />
+                    <img className="blueper-imgg" src="/blue-perfume.png" alt="Blue Perfume" />
                 </div>
             </div>
         </div>
@@ -174,11 +174,11 @@ const isLoggedIn = !!token;
                 <div className="orange-boxtext">
                     <h1>Discover perfumes that <br/> celebrate individuality</h1>
                     <p>every moment with an unforgettable <br/> essence.</p>
-                    <button>Shop Now</button>
+                    <button onClick={() => navigate("/product")}>Shop Now</button>
                 </div>
                 <div className="orange-boximg">
-                    <img className="orange-img" src="orange-perfume.png"/>
-                    <img className="orange-imgg" src="orange-perfume.png"/>
+                    <img className="orange-img" src="/orange-perfume.png" alt="Orange Perfume" />
+                    <img className="orange-imgg" src="/orange-perfume.png" alt="Orange Perfume" />
                 </div>
             </div>
         </div>
@@ -193,18 +193,18 @@ const isLoggedIn = !!token;
                         <h3>Unlock Exclusive <br /> Offers</h3>
                         <p>Discover special deals <br /> tailored just for you!</p>
                         </div>
-                        <img src="orange-removebg-preview.png" alt="" />
+                        <img src="/orange-removebg-preview.png" alt="Special Offer" />
                     </div>
                       <div className="offer2">
                         <h3>Gift a Scants to your loved one</h3>
                         <p>Make your love more beautiful</p>
-                        <img src="blackper.png" alt="" />
+                        <img src="/blackper.png" alt="Gift Perfume" />
                     </div>
-                      <div className="offer3">
+                      <div className="offer3" onClick={() => navigate("/product")} style={{ cursor: "pointer" }}>
                         <h3>luxury Scants <br />Starting at /4,000</h3>
                         <p>Shop <br />Now</p>
                         
-                        <img src="whiteper.png" alt="" />
+                        <img src="/whiteper.png" alt="Luxury Scents" />
                     </div>
                 </div>
                 <div className="features">
@@ -349,10 +349,10 @@ const isLoggedIn = !!token;
         <div className="describetext-home">
             <h2>Elegance in Every Bottle</h2>
             <p>Discover timeless fragrance crafted for every moments</p>
-            <button>Shop Now</button>
+            <button onClick={() => navigate("/product")}>Shop Now</button>
         </div>
         <div>
-             <img src="desper.jpg" alt="" />
+             <img src="/desper.jpg" alt="Perfume Bottle" />
         </div>
     </div>
             </div>
