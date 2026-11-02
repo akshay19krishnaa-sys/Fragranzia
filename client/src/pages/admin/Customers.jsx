@@ -31,7 +31,8 @@ function Customers() {
 
       <h2>Customers</h2>
 
-      <table>
+      <div className="table-wrapper">
+        <table>
 
         <thead>
 
@@ -99,9 +100,11 @@ function Customers() {
         </tbody>
 
       </table>
+      </div>
 
     </div>
   );
 }
+
 
 export default Customers;

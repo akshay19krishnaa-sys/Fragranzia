@@ -180,9 +180,10 @@ tbody tr:hover{
   background:#dc2626;
 }
 
-@media(max-width:768px){
+@media(max-width:900px){
   .category-page{
     margin-left:0;
+    margin-top:70px;
     padding:15px;
   }
 
@@ -196,3 +197,13 @@ tbody tr:hover{
     width:100%;
   }
 }
+
+@media(max-width:480px){
+  .category-page{
+    padding:10px;
+  }
+
+  .category-card{
+    padding:14px;
+  }
+}

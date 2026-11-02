@@ -2,118 +2,183 @@ const crypto = require("crypto");
 const Order = require("../../models/orders/order");
 const Address = require("../../models/address/addressModel");
 const { Product } = require("../../models/products/product");
+const User = require("../../models/user/user");
 const razorpay = require("../../config/razorpay");
-// Create order
-const createOrder = async (req, res) => {
-  try {
 
-    const {
+// Helper to validate and save an order in MongoDB, decrement stock, and clear cart
+const saveOrderToDatabase = async ({
+  userId,
   items,
   totalAmount,
   addressId,
   paymentMethod,
+  paymentStatus,
+  status,
+  razorpayOrderId,
+  razorpayPaymentId,
+  razorpaySignature,
   subtotal,
   discount,
   deliveryCharge,
-  paymentStatus,
-  razorpayOrderId,
-  razorpayPaymentId,
-  razorpaySignature
-} = req.body;
+}) => {
+  const address = await Address.findById(addressId);
+  if (!address) {
+    const error = new Error("Delivery address not found");
+    error.statusCode = 404;
+    throw error;
+  }
 
+  if (!items || items.length === 0) {
+    const error = new Error("Order items cannot be empty");
+    error.statusCode = 400;
+    throw error;
+  }
 
-    const address = await Address.findById(addressId);
+  // Stock check and decrement
+  for (const item of items) {
+    const prodId = item.product?._id || item.product || item.productId;
+    if (!prodId) continue;
 
-    if (!address) {
-      return res.status(404).json({
-        message:"Address not found"
-      });
+    const product = await Product.findById(prodId);
+    if (!product) {
+      const error = new Error("Product not found");
+      error.statusCode = 404;
+      throw error;
     }
 
-    for (const item of items) {
+    if (product.quantity < item.quantity) {
+      const error = new Error(`${product.title} is out of stock.`);
+      error.statusCode = 400;
+      throw error;
+    }
 
-  const product = await Product.findById(item.product._id);
-
-  if (!product) {
-    return res.status(404).json({
-      message: "Product not found",
+    await Product.findByIdAndUpdate(prodId, {
+      $inc: { quantity: -item.quantity },
     });
   }
 
-  if (product.quantity < item.quantity) {
-    return res.status(400).json({
-      message: `${product.title} is out of stock.`,
-    });
+  const formattedItems = items.map((item) => ({
+    productId: item.product?._id || item.product || item.productId,
+    productName: item.product?.title || item.productName || "Product",
+    productImage: item.product?.images?.[0] || item.productImage || "",
+    salePrice: item.product?.salePrice ?? item.salePrice ?? 0,
+    quantity: item.quantity,
+  }));
+
+  const order = await Order.create({
+    userId,
+    items: formattedItems,
+    totalAmount,
+    shippingAddress: {
+      fullName: address.fullName,
+      phone: address.phone,
+      house: address.house,
+      city: address.city,
+      state: address.state,
+      pincode: address.pincode,
+    },
+    paymentMethod: paymentMethod || "cod",
+    paymentStatus: paymentStatus || "pending",
+    status: status || (paymentStatus === "paid" ? "Processing" : "Pending"),
+    razorpayOrderId: razorpayOrderId || "",
+    razorpayPaymentId: razorpayPaymentId || "",
+    razorpaySignature: razorpaySignature || "",
+    subtotal: subtotal !== undefined ? subtotal : totalAmount,
+    discount: discount || 0,
+    deliveryCharge: deliveryCharge || 0,
+  });
+
+  // Clear user's cart in DB after order is saved
+  try {
+    await User.findByIdAndUpdate(userId, { cart: [] });
+  } catch (cartErr) {
+    console.warn("Could not clear user cart in DB:", cartErr.message);
   }
 
-  await Product.findByIdAndUpdate(
-    item.product._id,
-    {
-      $inc: {
-        quantity: -item.quantity,
-      },
+  return order;
+};
+
+// Create order
+const createOrder = async (req, res) => {
+  try {
+    const {
+      items,
+      totalAmount,
+      addressId,
+      paymentMethod,
+      subtotal,
+      discount,
+      deliveryCharge,
+      paymentStatus,
+      razorpayOrderId,
+      razorpayPaymentId,
+      razorpaySignature,
+    } = req.body;
+
+    // Idempotency: Prevent duplicate orders if razorpayPaymentId already exists
+    if (razorpayPaymentId) {
+      const existing = await Order.findOne({ razorpayPaymentId: razorpayPaymentId.trim() });
+      if (existing) {
+        return res.status(200).json(existing);
+      }
     }
-  );
-}
-   
 
-const formattedItems = items.map((item) => ({
-  productId: item.product._id,
-  productName: item.product.title,
-  productImage: item.product.images[0],
-  salePrice: item.product.salePrice,
-  quantity: item.quantity,
-}));
+    // If online payment (not COD), enforce server-side signature verification
+    if (paymentMethod !== "cod") {
+      if (!razorpayOrderId || !razorpayPaymentId || !razorpaySignature) {
+        return res.status(400).json({
+          message: "Online orders require valid Razorpay payment details and signature",
+        });
+      }
 
+      const secret = (process.env.RAZORPAY_KEY_SECRET || "").trim();
+      if (!secret) {
+        return res.status(500).json({
+          message: "Razorpay Secret Key is not configured on server",
+        });
+      }
 
+      const generatedSignature = crypto
+        .createHmac("sha256", secret)
+        .update(`${razorpayOrderId.trim()}|${razorpayPaymentId.trim()}`)
+        .digest("hex");
 
-const order = await Order.create({
+      const userSignature = razorpaySignature.trim();
+      const isMatch =
+        generatedSignature.length === userSignature.length &&
+        crypto.timingSafeEqual(
+          Buffer.from(generatedSignature, "utf-8"),
+          Buffer.from(userSignature, "utf-8")
+        );
 
-  userId: req.userId,
+      if (!isMatch) {
+        return res.status(400).json({
+          message: "Payment signature verification failed. Cannot place unverified order.",
+        });
+      }
+    }
 
-  items: formattedItems,
-
-  totalAmount,
-
-  shippingAddress: {
-    fullName: address.fullName,
-    phone: address.phone,
-    house: address.house,
-    city: address.city,
-    state: address.state,
-    pincode: address.pincode
-  },
-
-  paymentMethod,
-
-  paymentStatus: paymentStatus || "pending",
-
-  razorpayOrderId: razorpayOrderId || "",
-
-  razorpayPaymentId: razorpayPaymentId || "",
-
-  razorpaySignature: razorpaySignature || "",
-
-  subtotal,
-
-  discount,
-
-  deliveryCharge
-
-});
-
+    const order = await saveOrderToDatabase({
+      userId: req.userId,
+      items,
+      totalAmount,
+      addressId,
+      paymentMethod,
+      paymentStatus: paymentMethod === "cod" ? "pending" : (paymentStatus || "paid"),
+      status: paymentMethod === "cod" ? "Pending" : "Processing",
+      razorpayOrderId,
+      razorpayPaymentId,
+      razorpaySignature,
+      subtotal,
+      discount,
+      deliveryCharge,
+    });
 
     res.status(201).json(order);
-
-    // console.log(order.items);
-
-
-  } catch(error){
-
-    // console.log("ORDER ERROR:",error);
-
-    res.status(500).json({
-      message:error.message
+  } catch (error) {
+    console.error("ORDER ERROR:", error);
+    res.status(error.statusCode || 500).json({
+      message: error.message || "Failed to create order",
     });
   }
 };
@@ -426,6 +491,7 @@ const verifyRazorpayPayment = async (req, res) => {
       razorpay_order_id,
       razorpay_payment_id,
       razorpay_signature,
+      orderData,
     } = req.body;
 
     if (
@@ -435,7 +501,7 @@ const verifyRazorpayPayment = async (req, res) => {
     ) {
       return res.status(400).json({
         success: false,
-        message: "Payment details are missing",
+        message: "Payment details (razorpay_order_id, razorpay_payment_id, razorpay_signature) are missing",
       });
     }
 
@@ -464,7 +530,50 @@ const verifyRazorpayPayment = async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({
         success: false,
-        message: "Invalid payment signature",
+        message: "Invalid payment signature. Verification failed.",
+      });
+    }
+
+    // Deduplication check: Has this payment already created an order?
+    const existingOrder = await Order.findOne({
+      razorpayPaymentId: razorpay_payment_id.trim(),
+    });
+
+    if (existingOrder) {
+      try {
+        await User.findByIdAndUpdate(req.userId, { cart: [] });
+      } catch (e) {
+        console.warn("Cart clearing error:", e.message);
+      }
+      return res.status(200).json({
+        success: true,
+        order: existingOrder,
+        message: "Payment verified (order already exists)",
+      });
+    }
+
+    // Save order in MongoDB only after successful verification
+    if (orderData) {
+      const order = await saveOrderToDatabase({
+        userId: req.userId,
+        items: orderData.items,
+        totalAmount: orderData.totalAmount,
+        addressId: orderData.addressId,
+        paymentMethod: orderData.paymentMethod || "razorpay",
+        paymentStatus: "paid",
+        status: "Processing",
+        razorpayOrderId: razorpay_order_id.trim(),
+        razorpayPaymentId: razorpay_payment_id.trim(),
+        razorpaySignature: razorpay_signature.trim(),
+        subtotal: orderData.subtotal,
+        discount: orderData.discount,
+        deliveryCharge: orderData.deliveryCharge,
+      });
+
+      return res.status(200).json({
+        success: true,
+        order,
+        message: "Payment verified and order created successfully",
       });
     }
 
@@ -475,10 +584,9 @@ const verifyRazorpayPayment = async (req, res) => {
   } catch (error) {
     console.error("Payment Verification Error:", error);
 
-    res.status(500).json({
+    res.status(error.statusCode || 500).json({
       success: false,
-      message: "Payment verification failed",
-      error: error.message || error,
+      message: error.message || "Payment verification failed",
     });
   }
 };

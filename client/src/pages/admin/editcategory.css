@@ -101,7 +101,7 @@
   background: #218838;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .edit-category-page {
     margin-left: 0;
     margin-top: 70px;
@@ -121,3 +121,13 @@
     width: 100%;
   }
 }
+
+@media (max-width: 480px) {
+  .edit-category-page {
+    padding: 15px 10px;
+  }
+
+  .edit-category-card {
+    padding: 18px 14px;
+  }
+}

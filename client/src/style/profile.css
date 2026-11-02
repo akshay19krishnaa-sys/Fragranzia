@@ -213,3 +213,63 @@
 .delete-btn:hover {
   background: #e03232;
 }
+
+/* ========================================================
+   BREAKPOINTS
+   ======================================================== */
+
+@media (max-width: 768px) {
+  .profile-page {
+    margin: 20px auto;
+    padding: 15px;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .profile-header h2 {
+    font-size: 26px;
+  }
+
+  .profile-tabs {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-page {
+    padding: 10px;
+  }
+
+  .profile-card {
+    padding: 18px 14px;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .add-address-btn {
+    width: 100%;
+  }
+
+  .profile-tabs button {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .btn-group {
+    flex-wrap: wrap;
+  }
+}

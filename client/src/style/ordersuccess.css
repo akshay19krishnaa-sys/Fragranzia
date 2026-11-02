@@ -1,63 +1,86 @@
-.success-container{
-    min-height:80vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:40px;
+.success-container {
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 15px;
+    box-sizing: border-box;
 }
 
-.success-card{
-    width:450px;
-    background:#fff;
-    border-radius:12px;
-    box-shadow:0 5px 20px rgba(0,0,0,.1);
-    text-align:center;
-    padding:40px;
+.success-card {
+    width: 100%;
+    max-width: 450px;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    padding: 40px 25px;
+    box-sizing: border-box;
 }
 
-.success-icon{
-    width:90px;
-    height:90px;
-    margin:auto;
-    border-radius:50%;
-    background:#28a745;
-    color:#fff;
-    font-size:45px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+.success-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    border-radius: 50%;
+    background: #28a745;
+    color: #fff;
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.success-card h1{
-    margin-top:20px;
-    color:#00354B;
+.success-card h1 {
+    margin-top: 20px;
+    color: #00354B;
+    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
 }
 
-.success-card p{
-    margin-top:10px;
+.success-card p {
+    margin-top: 10px;
+    color: #555;
+    font-size: 14.5px;
 }
 
-.order-id{
-    margin:20px 0;
-    font-weight:bold;
+.order-id {
+    margin: 20px 0;
+    font-weight: bold;
+    word-break: break-all;
+    color: #333;
+    font-size: 14px;
 }
 
-.success-buttons{
-    display:flex;
-    justify-content:center;
-    gap:15px;
-    margin-top:30px;
+.success-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 25px;
+    flex-wrap: wrap;
 }
 
-.success-buttons button{
-    padding:12px 22px;
-    border:none;
-    border-radius:8px;
-    background:#00354B;
-    color:white;
-    cursor:pointer;
+.success-buttons button {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 8px;
+    background: #00354B;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: 0.3s ease;
 }
 
-.success-buttons button:hover{
-    opacity:.9;
+.success-buttons button:hover {
+    opacity: .9;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 480px) {
+    .success-card {
+        padding: 25px 15px;
+    }
+    .success-buttons button {
+        width: 100%;
+    }
 }

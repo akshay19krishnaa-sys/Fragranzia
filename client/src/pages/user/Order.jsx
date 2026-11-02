@@ -9,18 +9,12 @@ import { toast } from "react-toastify";
 import { getImageUrl } from "../../axios";
 
 function Order() {
-
-    const navigate = useNavigate();
-
-    console.log(
-    "Razorpay Key:",
-    import.meta.env.VITE_RAZORPAY_KEY_ID
-);
-
+  const navigate = useNavigate();
 
   const {
-    createOrder, createRazorpayOrder,
-  verifyRazorpayPayment,
+    createOrder,
+    createRazorpayOrder,
+    verifyRazorpayPayment,
   } = OrderService();
 
   const {
@@ -28,7 +22,8 @@ function Order() {
   } = AddressService();
 
   const {
-    getCartItems,clearCart
+    getCartItems,
+    clearCart
   } = CartService();
 
   const [cartItems, setCartItems] = useState([]);
@@ -158,6 +153,7 @@ function Order() {
       if (paymentMethod === "cod") {
         const order = await createOrder(orderData);
         await clearCart();
+        setCartItems([]);
         toast.success("Order placed successfully!");
         navigate(`/ordersuccess/${order._id}`);
         return;
@@ -192,46 +188,52 @@ function Order() {
         return;
       }
 
+      // Retrieve customer details for checkout prefill
+      const storedUser = (() => {
+        try {
+          return JSON.parse(localStorage.getItem("user") || "{}");
+        } catch {
+          return {};
+        }
+      })();
+
       // 2. Razorpay Checkout options
       const options = {
         key: razorpayKey,
         amount: razorpayData.order.amount,
         currency: razorpayData.order.currency || "INR",
         name: "Fragranzia",
-        description: "Fragranzia Order Payment",
+        description: "Order Payment",
         order_id: razorpayData.order.id,
 
         handler: async function (response) {
           try {
-            // 1. Verify payment with backend
+            // 1. Verify payment with backend & create order securely in MongoDB
             const verification = await verifyRazorpayPayment({
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
+              orderData,
             });
 
-            if (!verification || !verification.success) {
-              toast.error("Payment verification failed on server");
+            if (!verification || !verification.success || !verification.order) {
+              toast.error(verification?.message || "Payment verification failed on server");
               setIsProcessing(false);
               return;
             }
 
-            // 2. Create final order
-            const finalOrderData = {
-              ...orderData,
-              paymentStatus: "paid",
-              razorpayOrderId: response.razorpay_order_id,
-              razorpayPaymentId: response.razorpay_payment_id,
-              razorpaySignature: response.razorpay_signature,
-            };
+            const order = verification.order;
 
-            const order = await createOrder(finalOrderData);
+            // 2. Clear frontend cart state
+            try {
+              await clearCart();
+            } catch (clearErr) {
+              console.warn("Cart clear notice:", clearErr);
+            }
+            setCartItems([]);
 
-            // 3. Clear cart
-            await clearCart();
-
-            // 4. Success message & navigate
-            toast.success("Payment Successful!");
+            // 3. Success message & navigate to confirmation page
+            toast.success("Payment Successful! Order placed.");
             navigate(`/ordersuccess/${order._id}`);
           } catch (error) {
             console.error(
@@ -246,8 +248,9 @@ function Order() {
         },
 
         prefill: {
-          name: selectedAddress.fullName || "",
-          contact: selectedAddress.phone || "",
+          name: selectedAddress.fullName || storedUser.name || "Customer",
+          email: storedUser.email || "customer@fragranzia.com",
+          contact: selectedAddress.phone || storedUser.phone || "",
         },
 
         theme: {

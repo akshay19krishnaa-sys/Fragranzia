@@ -1,15 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import AdminSidebar from "../admin/AdminSidebar";
 import AdminNavbar from "../admin/AdminNavbar";
 
 const AdminLayout = () => {
-  return (
-    <div>
-      <AdminSidebar />
-      <AdminNavbar />
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
-      <div>
+  const toggleSidebar = () => {
+    setSidebarOpen((prev) => !prev);
+  };
+
+  const closeSidebar = () => {
+    setSidebarOpen(false);
+  };
+
+  return (
+    <div className="admin-layout-root">
+      <AdminSidebar isOpen={sidebarOpen} onClose={closeSidebar} />
+      <AdminNavbar onToggleSidebar={toggleSidebar} isSidebarOpen={sidebarOpen} />
+
+      {sidebarOpen && (
+        <div className="admin-sidebar-backdrop" onClick={closeSidebar} />
+      )}
+
+      <div className="admin-main-wrapper" onClick={closeSidebar}>
         <Outlet />
       </div>
     </div>

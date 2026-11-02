@@ -1,65 +1,120 @@
-.main-admin{
+.main-admin {
     position: fixed;
     top: 0;
     left: 250px;
     width: calc(100% - 250px);
     z-index: 1000;
+    transition: left 0.3s ease, width 0.3s ease;
 }
 
-.control-panel{
+.control-panel {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: white;
-    height: 80px;
+    height: 70px;
     width: 100%;
-    padding: 20px;
-    border-bottom: 1px solid whitesmoke;
+    padding: 0 25px;
+    border-bottom: 1px solid #eef0f3;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    box-sizing: border-box;
 }
 
-.main-page{
-    background-color: rgb(205, 205, 207);
-    height: 1000px;
+.admin-left-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.admin-left-header h3 {
+    margin: 0;
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: #222;
+    font-weight: 700;
+}
+
+.admin-sidebar-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    transition: 0.2s ease;
+}
+
+.admin-sidebar-toggle:hover {
+    background: #f1f3f5;
+    color: rgb(49, 140, 49);
+}
+
+.main-page {
+    background-color: #f5f6fa;
+    min-height: 1000px;
     width: 100%;
 }
 
-.panel-icons{
+.panel-icons {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 15px;
 }
 
-.panel-icons button{
+.panel-icons button {
     display: flex;
     justify-content: center;
     align-items: center;
     background: none;
-    padding: 10px;
+    padding: 8px;
     border: none;
     border-radius: 50%;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     transition: 0.3s ease;
     cursor: pointer;
+    font-size: 18px;
 }
 
-.panel-icons button:hover{
+.panel-icons button:hover {
     background-color: rgba(0,0,0,0.05);
     transform: translateY(-1px) scale(1.05);
-    box-shadow: 0 8px 18px rgba(0,0,0,0.22);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-.panel-icons button:active{
-    transform: scale(0.95);
-}
-
-.profile-icon{
+.profile-icon {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
 }
 
-.profile-icon h5{
+.profile-icon h5 {
     margin: 0;
+    font-size: 14px;
+    color: #333;
+    font-weight: 600;
+}
+
+/* ========================================================
+   BREAKPOINTS
+   ======================================================== */
+
+@media (max-width: 900px) {
+    .main-admin {
+        left: 0;
+        width: 100%;
+    }
+
+    .admin-sidebar-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .control-panel {
+        padding: 0 16px;
+        height: 65px;
+    }
 }

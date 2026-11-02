@@ -275,7 +275,7 @@
 @media (max-width: 900px) {
   .main-login {
     flex-direction: column;
-    gap: 40px;
+    gap: 30px;
     padding: 30px 20px;
     min-height: auto;
   }
@@ -283,21 +283,62 @@
   .text-login {
     width: 100%;
     max-width: 100%;
-    min-height: 320px;
-    border-bottom-left-radius: 100px;
-    border-top-right-radius: 100px;
+    min-height: 260px;
+    border-bottom-left-radius: 80px;
+    border-top-right-radius: 80px;
   }
 
   .text-login::before {
-    border-bottom-left-radius: 100px;
-    border-top-right-radius: 100px;
+    border-bottom-left-radius: 80px;
+    border-top-right-radius: 80px;
   }
 
   .text1-login {
-    padding: 40px 25px;
+    padding: 30px 20px;
   }
 
   .login-login {
     max-width: 100%;
   }
 }
+
+@media (max-width: 480px) {
+  .main-login {
+    padding: 20px 12px;
+    gap: 20px;
+  }
+
+  .text-login {
+    min-height: 200px;
+    border-bottom-left-radius: 40px;
+    border-top-right-radius: 40px;
+  }
+
+  .text-login::before {
+    border-bottom-left-radius: 40px;
+    border-top-right-radius: 40px;
+  }
+
+  .text1-login {
+    padding: 20px 15px;
+  }
+
+  .text1-login h1 {
+    font-size: 24px;
+  }
+
+  .text1-login h4 {
+    font-size: 13px;
+  }
+
+  .input-group-login input {
+    height: 45px;
+    font-size: 14px;
+  }
+
+  .signup-btn-login {
+    height: 45px;
+    font-size: 14px;
+  }
+}
+

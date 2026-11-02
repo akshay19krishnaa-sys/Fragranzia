@@ -303,7 +303,7 @@
   .main-signup,
   .main {
     flex-direction: column;
-    gap: 40px;
+    gap: 30px;
     padding: 30px 20px;
     min-height: auto;
   }
@@ -312,20 +312,20 @@
   .text {
     width: 100%;
     max-width: 100%;
-    min-height: 320px;
-    border-bottom-left-radius: 100px;
-    border-top-right-radius: 100px;
+    min-height: 260px;
+    border-bottom-left-radius: 80px;
+    border-top-right-radius: 80px;
   }
 
   .text-signup::before,
   .text::before {
-    border-bottom-left-radius: 100px;
-    border-top-right-radius: 100px;
+    border-bottom-left-radius: 80px;
+    border-top-right-radius: 80px;
   }
 
   .text1-signup,
   .text1 {
-    padding: 40px 25px;
+    padding: 30px 20px;
   }
 
   .sign-signup,
@@ -333,3 +333,50 @@
     max-width: 100%;
   }
 }
+
+@media (max-width: 480px) {
+  .main-signup,
+  .main {
+    padding: 20px 12px;
+    gap: 20px;
+  }
+
+  .text-signup,
+  .text {
+    min-height: 200px;
+    border-bottom-left-radius: 40px;
+    border-top-right-radius: 40px;
+  }
+
+  .text-signup::before,
+  .text::before {
+    border-bottom-left-radius: 40px;
+    border-top-right-radius: 40px;
+  }
+
+  .text1-signup,
+  .text1 {
+    padding: 20px 15px;
+  }
+
+  .text1-signup h1,
+  .text1 h1 {
+    font-size: 24px;
+  }
+
+  .text1-signup h4,
+  .text1 h4 {
+    font-size: 13px;
+  }
+
+  .input-group input {
+    height: 45px;
+    font-size: 14px;
+  }
+
+  .signup-btn {
+    height: 45px;
+    font-size: 14px;
+  }
+}
+

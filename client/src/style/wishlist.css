@@ -219,7 +219,7 @@ background: #fff;
 @media(max-width:768px){
 
   .wishlist-page{
-    padding: 20px;
+    padding: 20px 15px;
   }
 
   .wishlist-grid{
@@ -245,3 +245,18 @@ background: #fff;
   }
 
 }
+
+@media(max-width:374px){
+  .wishlist-page{
+    padding: 15px 10px;
+  }
+
+  .wishlist-grid{
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .wishlist-card img{
+    height: 180px;
+  }
+}

@@ -1,36 +1,40 @@
 body {
   margin: 0;
-   padding: 0;
+  padding: 0;
   font-family: var(--font-primary);
   background-color: var(--color-bg);
 }
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
 
 nav {
-width: 100%;
-  box-sizing: border-box;  /* add this */
-  padding: 15px 40px;      /* uncomment this */
+  width: 100%;
+  box-sizing: border-box;
+  padding: 15px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid var(--color-light);
-
-
+  background-color: #fff;
+  position: relative;
+  z-index: 1000;
 }
-.nav-list a{
-   color: inherit;
-  text-decoration: none;
-
-}
-
 
 .nav-head h2 {
   margin: 0;
   color: var(--color-primary);
   font-weight: 600;
   letter-spacing: 1px;
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  white-space: nowrap;
+}
+
+.nav-head a {
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
 }
 
 .nav-items {
@@ -39,8 +43,7 @@ width: 100%;
   gap: 25px;
 }
 
-
-ul {
+.nav-list ul {
   list-style: none;
   display: flex;
   gap: 25px;
@@ -48,7 +51,13 @@ ul {
   padding: 0;
 }
 
-ul button {
+.nav-list a {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+}
+
+.nav-list ul button {
   background: none;
   border: none;
   font-size: 15px;
@@ -60,8 +69,7 @@ ul button {
   transition: 0.3s ease;
 }
 
-
-ul button::after {
+.nav-list ul button::after {
   content: "";
   position: absolute;
   left: 0;
@@ -72,14 +80,13 @@ ul button::after {
   transition: 0.3s ease;
 }
 
-ul button:hover {
+.nav-list ul button:hover {
   color: var(--color-primary);
 }
 
-ul button:hover::after {
+.nav-list ul button:hover::after {
   width: 100%;
 }
-
 
 .nav-search {
   position: relative;
@@ -92,12 +99,14 @@ ul button:hover::after {
   background-color: #fff;
   outline: none;
   transition: 0.3s;
+  font-size: 14px;
+  width: 200px;
 }
+
 .nav-search input:hover {
   border-color: #053f4f;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
-
 
 .nav-search input:focus {
   border-color: var(--color-primary);
@@ -111,30 +120,34 @@ ul button:hover::after {
   left: 10px;
   transform: translateY(-50%);
   color: var(--color-muted);
+  cursor: pointer;
 }
+
 .search-icon:hover {
   color: #053f4f;
   transform: translateY(-50%) scale(1.1);
 }
 
 .nav-icons {
-
   display: flex;
   gap: 15px;
+  align-items: center;
 }
 
 .nav-icons button {
   background-color: var(--color-light);
   border: none;
-  padding: 10px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: 0.3s;
-    box-shadow: 0 0 6px rgba(0, 53, 75, 0.25);
+  box-shadow: 0 0 6px rgba(0, 53, 75, 0.25);
   color: var(--color-dark);
+  font-size: 16px;
 }
 
 .nav-icons button:hover {
@@ -142,7 +155,198 @@ ul button:hover::after {
   color: white;
   transform: translateY(-2px) scale(1.05);
 }
+
 .nav-icons a {
   color: inherit;
   text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mobile actions (cart + hamburger) */
+.nav-mobile-actions {
+  display: none;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-mobile-cart,
+.nav-hamburger {
+  background: var(--color-light);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  font-size: 20px;
+  transition: 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 53, 75, 0.15);
+}
+
+.nav-mobile-cart a {
+  color: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-hamburger:hover,
+.nav-mobile-cart:hover {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.nav-hamburger:hover a,
+.nav-mobile-cart:hover a {
+  color: white;
+}
+
+/* Backdrop */
+.nav-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  z-index: 999;
+  backdrop-filter: blur(2px);
+}
+
+/* ========================================================
+   BREAKPOINTS
+   ======================================================== */
+
+/* Laptop: 992px - 1199px */
+@media (max-width: 1199px) and (min-width: 992px) {
+  nav {
+    padding: 15px 25px;
+  }
+  .nav-items {
+    gap: 18px;
+  }
+  .nav-list ul {
+    gap: 18px;
+  }
+  .nav-search input {
+    width: 170px;
+  }
+}
+
+/* Tablet & Mobile: <= 991px */
+@media (max-width: 991px) {
+  nav {
+    padding: 12px 20px;
+  }
+
+  .nav-mobile-actions {
+    display: flex;
+  }
+
+  /* Drawer menu */
+  .nav-items {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 290px;
+    max-width: 82vw;
+    height: 100vh;
+    background: #ffffff;
+    box-shadow: -4px 0 25px rgba(0, 0, 0, 0.15);
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 60px 22px 30px;
+    gap: 20px;
+    overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .nav-items.open {
+    transform: translateX(0);
+  }
+
+  .nav-list ul {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .nav-list ul li {
+    width: 100%;
+  }
+
+  .nav-list ul button {
+    width: 100%;
+    text-align: left;
+    padding: 12px 16px;
+    border-radius: 8px;
+    background: #f8fafc;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .nav-list ul button::after {
+    display: none;
+  }
+
+  .nav-list ul button:hover {
+    background: var(--color-primary);
+    color: #fff;
+  }
+
+  .nav-search {
+    width: 100%;
+  }
+
+  .nav-search input {
+    width: 100%;
+    padding: 10px 14px 10px 38px;
+  }
+
+  .nav-icons {
+    display: flex;
+    justify-content: flex-start;
+    gap: 14px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+  }
+
+  .nav-icons button {
+    width: 42px;
+    height: 42px;
+    font-size: 18px;
+  }
+}
+
+/* Small mobile: 320px - 374px */
+@media (max-width: 374px) {
+  nav {
+    padding: 10px 12px;
+  }
+
+  .nav-head h2 {
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+  }
+
+  .nav-mobile-actions {
+    gap: 8px;
+  }
+
+  .nav-mobile-cart,
+  .nav-hamburger {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+
+  .nav-items {
+    width: 260px;
+    padding: 55px 16px 25px;
+  }
 }

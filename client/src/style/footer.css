@@ -1,34 +1,144 @@
-footer{
-    background-color: #8BB8BE;
-    color: var(--color-primary);
+footer {
+  background-color: #8BB8BE;
+  color: var(--color-primary);
+  width: 100%;
+  box-sizing: border-box;
 }
 
+.main-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 50px 8%;
+  gap: 40px;
+  flex-wrap: wrap;
+}
 
-.main-footer{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 50px;
-    
+.heading-footer h1 {
+  margin: 0;
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+  color: var(--color-primary);
 }
-.main1-footer{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 80px;
-}
-.social-media{
-    display: flex;
-    gap: 10px;
 
+.main1-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 60px;
+  flex-wrap: wrap;
 }
-.details{
-    display: flex;
-    justify-content: space-between;
+
+.pages-footer h4,
+.links-footer h4,
+.contact-media h4 {
+  margin: 0 0 14px;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.pages-footer p,
+.links-footer p,
+.contact-media p {
+  margin: 0 0 10px;
+  font-size: 14.5px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.pages-footer p:hover,
+.links-footer p:hover {
+  opacity: 0.75;
+}
+
+.contact-media p {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.social-media {
+  display: flex;
+  gap: 14px;
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+.social-media svg {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.social-media svg:hover {
+  transform: translateY(-2px) scale(1.1);
+}
+
+.details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 8%;
+  border-top: 1.5px solid rgba(0, 53, 75, 0.3);
+  font-size: 13.5px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.details1 {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+/* ========================================================
+   BREAKPOINTS
+   ======================================================== */
+
+@media (max-width: 900px) {
+  .main-footer {
+    padding: 40px 5%;
+    gap: 30px;
+  }
+
+  .main1-footer {
+    gap: 35px;
+  }
+}
+
+@media (max-width: 650px) {
+  .main-footer {
+    flex-direction: column;
+    padding: 30px 20px;
+    gap: 25px;
+  }
+
+  .main1-footer {
+    width: 100%;
+    flex-direction: column;
+    gap: 25px;
+    align-items: flex-start;
+  }
+
+  .details {
+    flex-direction: column;
+    align-items: flex-start;
     padding: 20px;
-    border-top: 2px solid var(--color-primary);
-}
-.details1{
-    display: flex;
     gap: 10px;
+  }
+}
+
+@media (max-width: 374px) {
+  .main-footer {
+    padding: 25px 12px;
+  }
+
+  .details {
+    padding: 15px 12px;
+  }
+
+  .details1 {
+    gap: 10px;
+    font-size: 12px;
+  }
 }

@@ -10,7 +10,7 @@ import { FiShoppingCart } from "react-icons/fi";
 import { toast } from "react-toastify";
 import "../admin/adminside.css";
 
-const AdminSidebar = () => {
+const AdminSidebar = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
@@ -37,37 +37,42 @@ const AdminSidebar = () => {
     navigate("/login");
   };
 
+  const handleLinkClick = () => {
+    if (onClose) onClose();
+  };
+
   return (
     <div>
-      <div className="dashtar">
+      <div className={`dashtar ${isOpen ? "open" : ""}`}>
         <h3>Dashtar</h3>
         <div className="dashtar-list">
           <div className="dashtar-list1">
-            <NavLink to="/admin/dashboard">
+            <NavLink to="/admin/dashboard" onClick={handleLinkClick}>
               <MdOutlineDashboard />Dashboard
             </NavLink>
           </div>
           <div className="dashtar-list1">
-            <NavLink to="/admin/adminpage">
+            <NavLink to="/admin/adminpage" onClick={handleLinkClick}>
               <AiOutlineProduct />Products
             </NavLink>
           </div>
           <div className="dashtar-list1">
-            <NavLink to="/admin/categories">
+            <NavLink to="/admin/categories" onClick={handleLinkClick}>
               <MdCategory /> Categories
             </NavLink>
           </div>
           <div className="dashtar-list1">
-            <NavLink to="/admin/customers">
+            <NavLink to="/admin/customers" onClick={handleLinkClick}>
               <MdManageAccounts />Customers
             </NavLink>
           </div>
           <div className="dashtar-list1">
-            <NavLink to="/admin/orders">
+            <NavLink to="/admin/orders" onClick={handleLinkClick}>
               <FiShoppingCart />Orders
             </NavLink>
           </div>
         </div>
+
 
         <div className="logout-btn-admin">
           <button type="button" onClick={() => setShowLogoutModal(true)}>
